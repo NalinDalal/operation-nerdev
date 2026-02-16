@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Invoice Site
 
-## Getting Started
+A small Next.js app that extracts structured invoice data from uploaded PDF or image files and displays the parsed invoice information.
 
-First, run the development server:
+## What it does
+
+- Accepts a PDF or image upload from the user.
+- Extracts text from the file (PDF parsing + OCR for images).
+- Sends the extracted text to an LLM (via `@instructor-ai/instructor` + OpenAI) to parse the invoice into a typed schema (customer, products, totals, currency).
+- Returns and displays the structured invoice data in the browser.
+
+## How it works (high level)
+
+- Frontend: Next.js App Router (`app/`) provides the UI in `app/page.tsx`.
+- API: `app/api/invoice-extract.ts` handles `POST` multipart uploads using `formidable`, extracts text using utilities in `utils/extract.ts`, then calls the Instructor/OpenAI client to parse the invoice fields using `zod` schemas.
+- Storage: uploads are handled as temporary files and cleaned up after parsing.
+
+## Key files
+
+- `app/page.tsx` — upload form and UI components.
+- `app/api/invoice-extract.ts` — API handler for processing file uploads.
+- `utils/extract.ts` — helper that extracts text from PDFs and images (PDF parsing, Tesseract OCR, or Google Vision depending on availability).
+- `utils/types.ts` — TypeScript types for the parsed invoice data.
+
+## Environment
+
+Set the following environment variables before running locally:
+
+- `OPENAI_API_KEY` — required to call the OpenAI API.
+- `OPENAI_MODEL` — (optional) preferred OpenAI model to use. Defaults to `gpt-4`.
+- `OPENAI_FALLBACK_MODEL` — (optional) fallback model used if preferred model isn't available. Defaults to `gpt-4o-mini`.
+
+Create a local `.env` file from `.env.example` and fill in values. Do NOT commit your `.env` file.
+
+Optional / recommended:
+
+- Credentials for Google Cloud Vision if you prefer Vision OCR over Tesseract.
+
+## Install and run
+
+Install dependencies and run the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Visit http://localhost:3000 in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+To build and run production:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## Dependencies
 
-To learn more about Next.js, take a look at the following resources:
+Some notable packages used in this project:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `next`, `react`, `react-dom` — Next.js framework
+- `formidable` — parse multipart file uploads in API route
+- `pdf-parse` — extract text from PDFs
+- `tesseract.js` and/or `@google-cloud/vision` — OCR for images
+- `@instructor-ai/instructor` and `openai` — call LLM to parse invoice into a schema
+- `zod` — schema validation for parsed invoice data
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Notes & troubleshooting
 
-## Deploy on Vercel
+- The project currently uses an API handler at `app/api/invoice-extract.ts`. In Next.js App Router, route segment config like `export const config = { api: { bodyParser: false }}` belongs in API route modules (or should be expressed via app-route `route.ts`). If you see a deprecation warning about `export const config` in pages/components, remove it from UI files and keep API-related config in the API route file.
+- If uploads fail, check that `formidable` can write temporary files (permissions) and that `OPENAI_API_KEY` is set.
+- For large files or longer parsing time, also check any platform-specific request timeout settings.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## License
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This repository has no license set. Add one if you plan to publish or share the code.
+
+---
+
+Problem: OpenAI API is not authenticated, i don't have it
