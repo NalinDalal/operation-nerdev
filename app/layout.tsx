@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, DM_Sans } from "next/font/google";
 import Link from "next/link";
-import { FileText, Mail, FileSignature, FileCheck, ScanLine } from "lucide-react";
+import { FileText, Mail, FileSignature, FileCheck, ScanLine, Users, FileStack, ArrowRightLeft } from "lucide-react";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -35,7 +35,7 @@ export default function RootLayout({
   );
 }
 
-export function Nav({ active }: { active: 'invoice' | 'email' | 'parse' | 'contracts' | 'proposals' }) {
+export function Nav({ active }: { active: 'invoice' | 'email' | 'parse' | 'contracts' | 'proposals' | 'scope-of-work' | 'change-request' | 'clients' }) {
   return (
     <nav className="bg-[var(--card)] border-b border-[var(--border)] sticky top-0 z-50">
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-3">
@@ -104,6 +104,39 @@ export function Nav({ active }: { active: 'invoice' | 'email' | 'parse' | 'contr
             >
               <FileCheck className="w-4 h-4" />
               <span className="text-xs">Proposals</span>
+            </Link>
+            <Link
+              href="/scope-of-work"
+              className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                active === 'scope-of-work'
+                  ? 'bg-[var(--card)] text-[var(--foreground)] shadow-sm'
+                  : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)]'
+              }`}
+            >
+              <FileStack className="w-4 h-4" />
+              <span className="text-xs">SoW</span>
+            </Link>
+            <Link
+              href="/change-request"
+              className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                active === 'change-request'
+                  ? 'bg-[var(--card)] text-[var(--foreground)] shadow-sm'
+                  : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)]'
+              }`}
+            >
+              <ArrowRightLeft className="w-4 h-4" />
+              <span className="text-xs">CR</span>
+            </Link>
+            <Link
+              href="/clients"
+              className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                active === 'clients'
+                  ? 'bg-[var(--card)] text-[var(--foreground)] shadow-sm'
+                  : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)]'
+              }`}
+            >
+              <Users className="w-4 h-4" />
+              <span className="text-xs">CRM</span>
             </Link>
           </div>
           <div className="w-[120px]" />
