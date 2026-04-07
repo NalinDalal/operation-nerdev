@@ -1,10 +1,10 @@
-Invoice Site
+# NerDev Operations
 
-A Next.js invoice app that works completely offline - no API keys required.
+A Next.js app for NerDev — a software development studio. Handles invoicing, contracts, proposals, and client management.
 
-## What it does
+## Features
 
-### Mode 1: Invoice Creator (`/`)
+### Invoice Creator (`/`)
 - Build invoices with a form-based interface
 - Fields: From/To (name, email, tax ID, address), Invoice #/date/due date/title, currency
 - Dynamic line items with name, description, price, quantity, discount %
@@ -14,22 +14,53 @@ A Next.js invoice app that works completely offline - no API keys required.
 - Live preview panel with real-time rendering
 - Print/Save as PDF button (uses `@media print` CSS)
 
-### Mode 2: Invoice Parser (`/parse`)
+### Invoice Parser (`/parse`)
 - Upload PDF or image
 - Extracts text using pdf-parse (PDF) or Tesseract.js (OCR for images)
 - Rule-based parsing with regex/heuristics (no LLM)
 - Maps common invoice fields to structured data
 - "Edit in Creator" button to pre-fill the form
 
-## Key files
+### Contract Generator (`/contracts`)
+- Generate freelance development contracts
+- Supports both INR (domestic) and USD (international) clients
+- PDF export with @react-pdf/renderer
 
-- `app/page.tsx` — Invoice Creator form and live preview
-- `app/parse/page.tsx` — Invoice Parser with regex extraction
-- `app/api/extract-text/route.ts` — Text extraction API
-- `utils/extract.ts` — PDF parsing + OCR utilities
-- `utils/types.ts` — TypeScript types
+### Proposal Generator (`/proposals`)
+- Create professional project proposals
+- Supports both INR and USD currencies
+- PDF export
 
-## Install and run
+## Project Structure
+
+```
+├── app/
+│   ├── page.tsx              — Invoice Creator
+│   ├── parse/page.tsx        — Invoice Parser
+│   ├── contracts/page.tsx   — Contract Generator
+│   └── proposals/page.tsx   — Proposal Generator
+├── docs/
+│   ├── contracts/            — Contract templates (Markdown)
+│   └── proposals/            — Proposal templates (Markdown)
+├── lib/
+│   ├── contracts/            — Contract PDF generator
+│   └── proposals/            — Proposal PDF generator
+├── utils/
+│   ├── extract.ts            — PDF parsing + OCR utilities
+│   └── types.ts              — TypeScript types
+└── public/
+```
+
+## Templates
+
+Markdown templates for contracts and proposals are in `docs/`:
+- `docs/contracts/freelance-contract-template.md` — Domestic (INR)
+- `docs/contracts/international-contract-template.md` — International (USD)
+- `docs/proposals/proposal-template-inr.md` — Proposal INR
+- `docs/proposals/proposal-template-usd.md` — Proposal USD
+- `docs/pricing-reference.md` — Internal pricing guide
+
+## Install and Run
 
 ```bash
 npm install
@@ -38,12 +69,20 @@ npm run dev
 
 Visit http://localhost:3000
 
+## Build for Production
+
+```bash
+npm run build
+npm start
+```
+
 ## Dependencies
 
 - `next`, `react`, `react-dom` — Next.js framework
+- `@react-pdf/renderer` — PDF generation
 - `formidable` — parse multipart uploads
 - `pdf-parse` — extract text from PDFs
 - `tesseract.js` — OCR for images
 - `zod` — schema validation
 
-No API keys required - works completely offline!
+No external API keys required - works offline!
