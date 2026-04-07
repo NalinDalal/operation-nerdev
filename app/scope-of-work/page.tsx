@@ -4,7 +4,7 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
-import { PageWrapper } from "@/components/page-wrapper";
+import { Header } from "@/components/header";
 import { Document, Page, Text, View, StyleSheet, pdf } from "@react-pdf/renderer";
 import { Download, Plus } from "lucide-react";
 
@@ -192,115 +192,119 @@ export default function ScopeOfWorkPage() {
   };
 
   return (
-    <PageWrapper title="Scope of Work Generator" description="Create detailed SoW to attach to contracts" active="scope-of-work">
-      <div className="grid md:grid-cols-2 gap-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Project Details</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <Label>Client Company</Label>
-              <Input value={formData.clientCompany} name="clientCompany" onChange={handleInputChange} placeholder="Client Name" />
-            </div>
-            <div>
-              <Label>Purpose</Label>
-              <textarea name="purpose" value={formData.purpose} onChange={handleInputChange} placeholder="What this project aims to achieve" className="w-full min-h-[80px] px-3 py-2 border border-input rounded-md bg-background text-sm" />
-            </div>
-            <div className="grid grid-cols-2 gap-4">
+    <div className="min-h-screen bg-[var(--background)]">
+      <Header title="Scope of Work" subtitle="Create detailed SoW to attach to contracts" active="scope-of-work" />
+
+      <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
+        <div className="grid md:grid-cols-2 gap-6">
+          <Card className="border-[var(--border)] shadow-sm">
+            <CardHeader>
+              <CardTitle>Project Details</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
               <div>
-                <Label>Date</Label>
-                <Input type="date" name="date" value={formData.date} onChange={handleInputChange} />
+                <Label>Client Company</Label>
+                <Input value={formData.clientCompany} name="clientCompany" onChange={handleInputChange} placeholder="Client Name" />
               </div>
               <div>
-                <Label>Duration (weeks)</Label>
-                <Input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} />
+                <Label>Purpose</Label>
+                <textarea name="purpose" value={formData.purpose} onChange={handleInputChange} placeholder="What this project aims to achieve" className="w-full min-h-[80px] px-3 py-2 border border-input rounded-md bg-background text-sm" />
               </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Deliverables</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {deliverables.map((d, i) => (
-              <div key={i} className="grid grid-cols-3 gap-2">
-                <Input value={d.name} placeholder="Name" onChange={(e) => {
-                  const arr = [...deliverables]; arr[i].name = e.target.value; setDeliverables(arr);
-                }} />
-                <Input value={d.description} placeholder="Description" onChange={(e) => {
-                  const arr = [...deliverables]; arr[i].description = e.target.value; setDeliverables(arr);
-                }} />
-                <Input value={d.criteria} placeholder="Acceptance criteria" onChange={(e) => {
-                  const arr = [...deliverables]; arr[i].criteria = e.target.value; setDeliverables(arr);
-                }} />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <Label>Date</Label>
+                  <Input type="date" name="date" value={formData.date} onChange={handleInputChange} />
+                </div>
+                <div>
+                  <Label>Duration (weeks)</Label>
+                  <Input type="number" value={duration} onChange={(e) => setDuration(e.target.value)} />
+                </div>
               </div>
-            ))}
-            <Button variant="outline" size="sm" onClick={() => setDeliverables([...deliverables, { name: "", description: "", criteria: "" }])}>
-              <Plus className="w-4 h-4 mr-2" /> Add Deliverable
-            </Button>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Out of Scope</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <textarea value={outOfScope.join("\n")} onChange={(e) => setOutOfScope(e.target.value.split("\n"))} placeholder="One per line" className="w-full min-h-[100px] px-3 py-2 border border-input rounded-md bg-background text-sm" />
-          </CardContent>
-        </Card>
+          <Card className="border-[var(--border)] shadow-sm">
+            <CardHeader>
+              <CardTitle>Deliverables</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {deliverables.map((d, i) => (
+                <div key={i} className="grid grid-cols-3 gap-2">
+                  <Input value={d.name} placeholder="Name" onChange={(e) => {
+                    const arr = [...deliverables]; arr[i].name = e.target.value; setDeliverables(arr);
+                  }} />
+                  <Input value={d.description} placeholder="Description" onChange={(e) => {
+                    const arr = [...deliverables]; arr[i].description = e.target.value; setDeliverables(arr);
+                  }} />
+                  <Input value={d.criteria} placeholder="Acceptance criteria" onChange={(e) => {
+                    const arr = [...deliverables]; arr[i].criteria = e.target.value; setDeliverables(arr);
+                  }} />
+                </div>
+              ))}
+              <Button variant="outline" size="sm" onClick={() => setDeliverables([...deliverables, { name: "", description: "", criteria: "" }])}>
+                <Plus className="w-4 h-4 mr-2" /> Add Deliverable
+              </Button>
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Tech Stack</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <textarea value={techStack.join("\n")} onChange={(e) => setTechStack(e.target.value.split("\n"))} placeholder="One per line" className="w-full min-h-[100px] px-3 py-2 border border-input rounded-md bg-background text-sm" />
-          </CardContent>
-        </Card>
+          <Card className="border-[var(--border)] shadow-sm">
+            <CardHeader>
+              <CardTitle>Out of Scope</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <textarea value={outOfScope.join("\n")} onChange={(e) => setOutOfScope(e.target.value.split("\n"))} placeholder="One per line" className="w-full min-h-[100px] px-3 py-2 border border-input rounded-md bg-background text-sm" />
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Milestones</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-3">
-            {milestones.map((m, i) => (
-              <div key={i} className="grid grid-cols-3 gap-2">
-                <Input value={m.name} placeholder="Milestone name" onChange={(e) => {
-                  const arr = [...milestones]; arr[i].name = e.target.value; setMilestones(arr);
-                }} />
-                <Input value={m.description} placeholder="Description" onChange={(e) => {
-                  const arr = [...milestones]; arr[i].description = e.target.value; setMilestones(arr);
-                }} />
-                <Input type="date" value={m.date} onChange={(e) => {
-                  const arr = [...milestones]; arr[i].date = e.target.value; setMilestones(arr);
-                }} />
-              </div>
-            ))}
-            <Button variant="outline" size="sm" onClick={() => setMilestones([...milestones, { name: "", description: "", date: "" }])}>
-              <Plus className="w-4 h-4 mr-2" /> Add Milestone
-            </Button>
-          </CardContent>
-        </Card>
+          <Card className="border-[var(--border)] shadow-sm">
+            <CardHeader>
+              <CardTitle>Tech Stack</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <textarea value={techStack.join("\n")} onChange={(e) => setTechStack(e.target.value.split("\n"))} placeholder="One per line" className="w-full min-h-[100px] px-3 py-2 border border-input rounded-md bg-background text-sm" />
+            </CardContent>
+          </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Acceptance Criteria</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <textarea value={acceptanceCriteria.join("\n")} onChange={(e) => setAcceptanceCriteria(e.target.value.split("\n"))} placeholder="One per line" className="w-full min-h-[100px] px-3 py-2 border border-input rounded-md bg-background text-sm" />
-          </CardContent>
-        </Card>
+          <Card className="border-[var(--border)] shadow-sm">
+            <CardHeader>
+              <CardTitle>Milestones</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              {milestones.map((m, i) => (
+                <div key={i} className="grid grid-cols-3 gap-2">
+                  <Input value={m.name} placeholder="Milestone name" onChange={(e) => {
+                    const arr = [...milestones]; arr[i].name = e.target.value; setMilestones(arr);
+                  }} />
+                  <Input value={m.description} placeholder="Description" onChange={(e) => {
+                    const arr = [...milestones]; arr[i].description = e.target.value; setMilestones(arr);
+                  }} />
+                  <Input type="date" value={m.date} onChange={(e) => {
+                    const arr = [...milestones]; arr[i].date = e.target.value; setMilestones(arr);
+                  }} />
+                </div>
+              ))}
+              <Button variant="outline" size="sm" onClick={() => setMilestones([...milestones, { name: "", description: "", date: "" }])}>
+                <Plus className="w-4 h-4 mr-2" /> Add Milestone
+              </Button>
+            </CardContent>
+          </Card>
+
+          <Card className="border-[var(--border)] shadow-sm">
+            <CardHeader>
+              <CardTitle>Acceptance Criteria</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <textarea value={acceptanceCriteria.join("\n")} onChange={(e) => setAcceptanceCriteria(e.target.value.split("\n"))} placeholder="One per line" className="w-full min-h-[100px] px-3 py-2 border border-input rounded-md bg-background text-sm" />
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="mt-6 flex justify-end">
+          <Button onClick={generatePDF} disabled={isGenerating} className="gap-2">
+            {isGenerating ? "Generating..." : <><Download className="w-4 h-4" /> Generate SoW PDF</>}
+          </Button>
+        </div>
       </div>
-
-      <div className="mt-6 flex justify-end">
-        <Button onClick={generatePDF} disabled={isGenerating} className="gap-2">
-          {isGenerating ? "Generating..." : <><Download className="w-4 h-4" /> Generate SoW PDF</>}
-        </Button>
-      </div>
-    </PageWrapper>
+    </div>
   );
 }

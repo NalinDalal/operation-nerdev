@@ -4,7 +4,7 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
-import { PageWrapper } from "@/components/page-wrapper";
+import { Header } from "@/components/header";
 import { Plus, Trash2, Save, Users, Search } from "lucide-react";
 
 interface Client {
@@ -102,165 +102,164 @@ export default function ClientsPage() {
   };
 
   return (
-    <PageWrapper title="Client CRM" description="Track your clients and pipeline" active="clients">
-      <div className="flex justify-end mb-6">
-        <Button onClick={() => setShowAddForm(true)} className="gap-2">
-          <Plus className="w-4 h-4" /> Add Client
-        </Button>
-      </div>
+    <div className="min-h-screen bg-[var(--background)]">
+      <Header title="Client CRM" subtitle="Track your clients and pipeline" active="clients" 
+        action={<Button onClick={() => setShowAddForm(true)} className="gap-2"><Plus className="w-4 h-4" />Add Client</Button>} />
 
-      <div className="grid grid-cols-4 gap-4 mb-6">
-        <Card>
-          <CardContent className="pt-4">
-            <div className="text-2xl font-bold">{stats.total}</div>
-            <div className="text-sm text-gray-500">Total Clients</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-4">
-            <div className="text-2xl font-bold text-yellow-600">{stats.leads}</div>
-            <div className="text-sm text-gray-500">Leads</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-4">
-            <div className="text-2xl font-bold text-blue-600">{stats.active}</div>
-            <div className="text-sm text-gray-500">Active Projects</div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="pt-4">
-            <div className="text-2xl font-bold text-green-600">₹{stats.revenue.toLocaleString()}</div>
-            <div className="text-sm text-gray-500">Total Billed</div>
-          </CardContent>
-        </Card>
-      </div>
+      <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
+        <div className="grid grid-cols-4 gap-4 mb-6">
+          <Card className="border-[var(--border)] shadow-sm">
+            <CardContent className="pt-4">
+              <div className="text-2xl font-bold">{stats.total}</div>
+              <div className="text-sm text-[var(--muted-foreground)]">Total Clients</div>
+            </CardContent>
+          </Card>
+          <Card className="border-[var(--border)] shadow-sm">
+            <CardContent className="pt-4">
+              <div className="text-2xl font-bold text-yellow-600">{stats.leads}</div>
+              <div className="text-sm text-[var(--muted-foreground)]">Leads</div>
+            </CardContent>
+          </Card>
+          <Card className="border-[var(--border)] shadow-sm">
+            <CardContent className="pt-4">
+              <div className="text-2xl font-bold text-blue-600">{stats.active}</div>
+              <div className="text-sm text-[var(--muted-foreground)]">Active Projects</div>
+            </CardContent>
+          </Card>
+          <Card className="border-[var(--border)] shadow-sm">
+            <CardContent className="pt-4">
+              <div className="text-2xl font-bold text-green-600">₹{stats.revenue.toLocaleString()}</div>
+              <div className="text-sm text-[var(--muted-foreground)]">Total Billed</div>
+            </CardContent>
+          </Card>
+        </div>
 
-      <Card className="mb-6">
-        <CardContent className="pt-4">
-          <div className="flex gap-4">
-            <div className="flex-1 relative">
-              <Search className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
-              <Input 
-                placeholder="Search clients..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-            <select 
-              value={filter} 
-              onChange={(e) => setFilter(e.target.value)}
-              className="px-3 py-2 border border-input rounded-md bg-background text-sm"
-            >
-              <option value="all">All Status</option>
-              <option value="lead">Lead</option>
-              <option value="active">Active</option>
-              <option value="delivered">Delivered</option>
-              <option value="retainer">Retainer</option>
-            </select>
-          </div>
-        </CardContent>
-      </Card>
-
-      {showAddForm && (
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle>Add New Client</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-3 gap-4">
-              <div>
-                <Label>Company Name *</Label>
-                <Input value={newClient.name} onChange={(e) => setNewClient({ ...newClient, name: e.target.value })} placeholder="Company Name" />
+        <Card className="border-[var(--border)] shadow-sm mb-6">
+          <CardContent className="pt-4">
+            <div className="flex gap-4">
+              <div className="flex-1 relative">
+                <Search className="w-4 h-4 absolute left-3 top-3 text-[var(--muted-foreground)]" />
+                <Input 
+                  placeholder="Search clients..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
               </div>
-              <div>
-                <Label>Contact Person</Label>
-                <Input value={newClient.contact} onChange={(e) => setNewClient({ ...newClient, contact: e.target.value })} placeholder="Name" />
-              </div>
-              <div>
-                <Label>Email</Label>
-                <Input value={newClient.email} onChange={(e) => setNewClient({ ...newClient, email: e.target.value })} placeholder="email@company.com" />
-              </div>
-              <div>
-                <Label>Country</Label>
-                <select value={newClient.country} onChange={(e) => setNewClient({ ...newClient, country: e.target.value as "INR" | "USD" })} className="w-full px-3 py-2 border border-input rounded-md bg-background text-sm">
-                  <option value="INR">India (INR)</option>
-                  <option value="USD">International (USD)</option>
-                </select>
-              </div>
-              <div>
-                <Label>Status</Label>
-                <select value={newClient.status} onChange={(e) => setNewClient({ ...newClient, status: e.target.value as any })} className="w-full px-3 py-2 border border-input rounded-md bg-background text-sm">
-                  <option value="lead">Lead</option>
-                  <option value="active">Active</option>
-                  <option value="delivered">Delivered</option>
-                  <option value="retainer">Retainer</option>
-                </select>
-              </div>
-              <div>
-                <Label>Total Billed</Label>
-                <Input type="number" value={newClient.totalBilled} onChange={(e) => setNewClient({ ...newClient, totalBilled: parseInt(e.target.value) })} placeholder="0" />
-              </div>
-              <div className="md:col-span-3">
-                <Label>Project Name</Label>
-                <Input value={newClient.projectName} onChange={(e) => setNewClient({ ...newClient, projectName: e.target.value })} placeholder="Project Name" />
-              </div>
-            </div>
-            <div className="flex gap-2 mt-4">
-              <Button onClick={addClient} className="gap-2"><Save className="w-4 h-4" /> Save</Button>
-              <Button variant="outline" onClick={() => setShowAddForm(false)}>Cancel</Button>
+              <select 
+                value={filter} 
+                onChange={(e) => setFilter(e.target.value)}
+                className="px-3 py-2 border border-[var(--border)] rounded-md bg-background text-sm"
+              >
+                <option value="all">All Status</option>
+                <option value="lead">Lead</option>
+                <option value="active">Active</option>
+                <option value="delivered">Delivered</option>
+                <option value="retainer">Retainer</option>
+              </select>
             </div>
           </CardContent>
         </Card>
-      )}
 
-      <Card>
-        <CardContent className="p-0">
-          <table className="w-full">
-            <thead className="border-b bg-gray-50">
-              <tr>
-                <th className="text-left p-4 text-sm font-medium text-gray-500">Client</th>
-                <th className="text-left p-4 text-sm font-medium text-gray-500">Project</th>
-                <th className="text-left p-4 text-sm font-medium text-gray-500">Status</th>
-                <th className="text-right p-4 text-sm font-medium text-gray-500">Total Billed</th>
-                <th className="text-right p-4 text-sm font-medium text-gray-500">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {filteredClients.length === 0 ? (
+        {showAddForm && (
+          <Card className="border-[var(--border)] shadow-sm mb-6">
+            <CardHeader>
+              <CardTitle>Add New Client</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid md:grid-cols-3 gap-4">
+                <div>
+                  <Label>Company Name *</Label>
+                  <Input value={newClient.name} onChange={(e) => setNewClient({ ...newClient, name: e.target.value })} placeholder="Company Name" />
+                </div>
+                <div>
+                  <Label>Contact Person</Label>
+                  <Input value={newClient.contact} onChange={(e) => setNewClient({ ...newClient, contact: e.target.value })} placeholder="Name" />
+                </div>
+                <div>
+                  <Label>Email</Label>
+                  <Input value={newClient.email} onChange={(e) => setNewClient({ ...newClient, email: e.target.value })} placeholder="email@company.com" />
+                </div>
+                <div>
+                  <Label>Country</Label>
+                  <select value={newClient.country} onChange={(e) => setNewClient({ ...newClient, country: e.target.value as "INR" | "USD" })} className="w-full px-3 py-2 border border-[var(--border)] rounded-md bg-background text-sm">
+                    <option value="INR">India (INR)</option>
+                    <option value="USD">International (USD)</option>
+                  </select>
+                </div>
+                <div>
+                  <Label>Status</Label>
+                  <select value={newClient.status} onChange={(e) => setNewClient({ ...newClient, status: e.target.value as any })} className="w-full px-3 py-2 border border-[var(--border)] rounded-md bg-background text-sm">
+                    <option value="lead">Lead</option>
+                    <option value="active">Active</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="retainer">Retainer</option>
+                  </select>
+                </div>
+                <div>
+                  <Label>Total Billed</Label>
+                  <Input type="number" value={newClient.totalBilled} onChange={(e) => setNewClient({ ...newClient, totalBilled: parseInt(e.target.value) })} placeholder="0" />
+                </div>
+                <div className="md:col-span-3">
+                  <Label>Project Name</Label>
+                  <Input value={newClient.projectName} onChange={(e) => setNewClient({ ...newClient, projectName: e.target.value })} placeholder="Project Name" />
+                </div>
+              </div>
+              <div className="flex gap-2 mt-4">
+                <Button onClick={addClient} className="gap-2"><Save className="w-4 h-4" />Save</Button>
+                <Button variant="outline" onClick={() => setShowAddForm(false)}>Cancel</Button>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        <Card className="border-[var(--border)] shadow-sm">
+          <CardContent className="p-0">
+            <table className="w-full">
+              <thead className="border-b border-[var(--border)] bg-[var(--background)]">
                 <tr>
-                  <td colSpan={5} className="p-8 text-center text-gray-500">No clients found</td>
+                  <th className="text-left p-4 text-sm font-medium text-[var(--muted-foreground)]">Client</th>
+                  <th className="text-left p-4 text-sm font-medium text-[var(--muted-foreground)]">Project</th>
+                  <th className="text-left p-4 text-sm font-medium text-[var(--muted-foreground)]">Status</th>
+                  <th className="text-right p-4 text-sm font-medium text-[var(--muted-foreground)]">Total Billed</th>
+                  <th className="text-right p-4 text-sm font-medium text-[var(--muted-foreground)]">Actions</th>
                 </tr>
-              ) : filteredClients.map((client) => (
-                <tr key={client.id} className="border-b">
-                  <td className="p-4">
-                    <div className="font-medium">{client.name}</div>
-                    <div className="text-sm text-gray-500">{client.contact} • {client.email}</div>
-                  </td>
-                  <td className="p-4">
-                    <div className="text-sm">{client.projectName}</div>
-                    <div className="text-xs text-gray-400">{client.country}</div>
-                  </td>
-                  <td className="p-4">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(client.status)}`}>
-                      {client.status.charAt(0).toUpperCase() + client.status.slice(1)}
-                    </span>
-                  </td>
-                  <td className="p-4 text-right font-medium">
-                    {client.country === "INR" ? "₹" : "$"}{client.totalBilled.toLocaleString()}
-                  </td>
-                  <td className="p-4 text-right">
-                    <Button variant="ghost" size="sm" onClick={() => deleteClient(client.id)}>
-                      <Trash2 className="w-4 h-4 text-red-500" />
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </CardContent>
-      </Card>
-    </PageWrapper>
+              </thead>
+              <tbody>
+                {filteredClients.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="p-8 text-center text-[var(--muted-foreground)]">No clients found</td>
+                  </tr>
+                ) : filteredClients.map((client) => (
+                  <tr key={client.id} className="border-b border-[var(--border)]">
+                    <td className="p-4">
+                      <div className="font-medium">{client.name}</div>
+                      <div className="text-sm text-[var(--muted-foreground)]">{client.contact} • {client.email}</div>
+                    </td>
+                    <td className="p-4">
+                      <div className="text-sm">{client.projectName}</div>
+                      <div className="text-xs text-[var(--muted-foreground)]">{client.country}</div>
+                    </td>
+                    <td className="p-4">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(client.status)}`}>
+                        {client.status.charAt(0).toUpperCase() + client.status.slice(1)}
+                      </span>
+                    </td>
+                    <td className="p-4 text-right font-medium">
+                      {client.country === "INR" ? "₹" : "$"}{client.totalBilled.toLocaleString()}
+                    </td>
+                    <td className="p-4 text-right">
+                      <Button variant="ghost" size="sm" onClick={() => deleteClient(client.id)}>
+                        <Trash2 className="w-4 h-4 text-red-500" />
+                      </Button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
   );
 }
