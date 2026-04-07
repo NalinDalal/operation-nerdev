@@ -35,7 +35,7 @@ export default function RootLayout({
   );
 }
 
-export function Nav({ active }: { active: 'invoice' | 'email' | 'parse' | 'contracts' | 'proposals' | 'scope-of-work' | 'change-request' | 'clients' }) {
+export function Nav({ active }: { active: 'invoice' | 'email' | 'parse' | 'contracts' | 'proposals' | 'scope-of-work' | 'change-request' | 'clients' | 'sign-links' }) {
   return (
     <nav className="bg-[var(--card)] border-b border-[var(--border)] sticky top-0 z-50">
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-3">
@@ -137,6 +137,17 @@ export function Nav({ active }: { active: 'invoice' | 'email' | 'parse' | 'contr
             >
               <Users className="w-4 h-4" />
               <span className="text-xs">CRM</span>
+            </Link>
+            <Link
+              href="/sign-links"
+              className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium transition-colors ${
+                active === 'sign-links'
+                  ? 'bg-[var(--card)] text-[var(--foreground)] shadow-sm'
+                  : 'text-[var(--muted-foreground)] hover:text-[var(--foreground)]'
+              }`}
+            >
+              <FileSignature className="w-4 h-4" />
+              <span className="text-xs">Sign</span>
             </Link>
           </div>
           <div className="w-[120px]" />
