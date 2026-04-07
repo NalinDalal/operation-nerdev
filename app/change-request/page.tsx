@@ -4,17 +4,15 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
+import { PageWrapper } from "@/components/page-wrapper";
 import { Document, Page, Text, View, StyleSheet, pdf } from "@react-pdf/renderer";
-import { Download, FileText, ArrowRight } from "lucide-react";
+import { Download, DollarSign } from "lucide-react";
 
 const styles = StyleSheet.create({
   page: { padding: 40, fontSize: 10, fontFamily: 'Helvetica', lineHeight: 1.5 },
   header: { fontSize: 16, fontWeight: 'bold', marginBottom: 15 },
   section: { marginBottom: 12 },
   sectionTitle: { fontSize: 12, fontWeight: 'bold', marginBottom: 6 },
-  table: { marginBottom: 10 },
-  tableRow: { flexDirection: 'row', borderBottomWidth: 0.5, borderBottomColor: '#ccc', paddingVertical: 4 },
-  tableCell: { flex: 1, fontSize: 9 },
   bold: { fontWeight: 'bold' },
 });
 
@@ -117,107 +115,99 @@ export default function ChangeRequestPage() {
   const currencySymbol = currency === "INR" ? "₹" : "$";
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Change Request Generator</h1>
-            <p className="text-gray-600 mt-1">Formalize scope changes mid-project</p>
-          </div>
-          <div className="flex gap-2">
-            <Button variant={currency === "INR" ? "default" : "outline"} onClick={() => setCurrency("INR")}>INR</Button>
-            <Button variant={currency === "USD" ? "default" : "outline"} onClick={() => setCurrency("USD")}>USD</Button>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Request Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label>CR Number</Label>
-                  <Input name="crNumber" value={formData.crNumber} onChange={handleInputChange} placeholder="CR-001" />
-                </div>
-                <div>
-                  <Label>Date</Label>
-                  <Input type="date" name="date" value={formData.date} onChange={handleInputChange} />
-                </div>
-              </div>
-              <div>
-                <Label>Client Company</Label>
-                <Input name="clientCompany" value={formData.clientCompany} onChange={handleInputChange} placeholder="Client Name" />
-              </div>
-              <div>
-                <Label>Contact Person</Label>
-                <Input name="clientName" value={formData.clientName} onChange={handleInputChange} placeholder="Contact Name" />
-              </div>
-              <div>
-                <Label>Project Name</Label>
-                <Input name="projectName" value={formData.projectName} onChange={handleInputChange} placeholder="Project Name" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Change Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <Label>Type of Change</Label>
-                <select name="changeType" value={formData.changeType} onChange={handleInputChange} className="w-full px-3 py-2 border border-input rounded-md bg-background text-sm">
-                  <option>New feature</option>
-                  <option>Modification to existing feature</option>
-                  <option>Design change</option>
-                  <option>Integration with new third-party</option>
-                  <option>Other</option>
-                </select>
-              </div>
-              <div>
-                <Label>Description</Label>
-                <textarea name="description" value={formData.description} onChange={handleInputChange} placeholder="Detailed description of the change..." className="w-full min-h-[120px] px-3 py-2 border border-input rounded-md bg-background text-sm" />
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="md:col-span-2">
-            <CardHeader>
-              <CardTitle>Impact Assessment</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-4 gap-4">
-                <div>
-                  <Label>Additional Hours</Label>
-                  <Input name="hours" value={formData.hours} onChange={handleInputChange} placeholder="8" />
-                </div>
-                <div>
-                  <Label>Additional Cost</Label>
-                  <Input name="cost" value={formData.cost} onChange={handleInputChange} placeholder={`${currencySymbol}12000`} />
-                </div>
-                <div>
-                  <Label>New End Date</Label>
-                  <Input type="date" name="newEndDate" value={formData.newEndDate} onChange={handleInputChange} />
-                </div>
-                <div>
-                  <Label>&nbsp;</Label>
-                  <div className="text-sm text-gray-500 pt-2">
-                    Per hour: {currency === "INR" ? "₹1500" : "$45"}
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <div className="mt-6 flex justify-end gap-4">
-          <Button onClick={generatePDF} disabled={isGenerating} className="gap-2">
-            {isGenerating ? "Generating..." : <><Download className="w-4 h-4" /> Generate CR PDF</>}
-          </Button>
-        </div>
+    <PageWrapper title="Change Request Generator" description="Formalize scope changes mid-project" active="change-request">
+      <div className="flex justify-end gap-2 mb-6">
+        <Button variant={currency === "INR" ? "default" : "outline"} onClick={() => setCurrency("INR")}>INR</Button>
+        <Button variant={currency === "USD" ? "default" : "outline"} onClick={() => setCurrency("USD")}>USD</Button>
       </div>
-    </div>
+
+      <div className="grid md:grid-cols-2 gap-6">
+        <Card>
+          <CardHeader>
+            <CardTitle>Request Details</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <Label>CR Number</Label>
+                <Input name="crNumber" value={formData.crNumber} onChange={handleInputChange} placeholder="CR-001" />
+              </div>
+              <div>
+                <Label>Date</Label>
+                <Input type="date" name="date" value={formData.date} onChange={handleInputChange} />
+              </div>
+            </div>
+            <div>
+              <Label>Client Company</Label>
+              <Input name="clientCompany" value={formData.clientCompany} onChange={handleInputChange} placeholder="Client Name" />
+            </div>
+            <div>
+              <Label>Contact Person</Label>
+              <Input name="clientName" value={formData.clientName} onChange={handleInputChange} placeholder="Contact Name" />
+            </div>
+            <div>
+              <Label>Project Name</Label>
+              <Input name="projectName" value={formData.projectName} onChange={handleInputChange} placeholder="Project Name" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Change Details</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <Label>Type of Change</Label>
+              <select name="changeType" value={formData.changeType} onChange={handleInputChange} className="w-full px-3 py-2 border border-input rounded-md bg-background text-sm">
+                <option>New feature</option>
+                <option>Modification to existing feature</option>
+                <option>Design change</option>
+                <option>Integration with new third-party</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div>
+              <Label>Description</Label>
+              <textarea name="description" value={formData.description} onChange={handleInputChange} placeholder="Detailed description of the change..." className="w-full min-h-[120px] px-3 py-2 border border-input rounded-md bg-background text-sm" />
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="md:col-span-2">
+          <CardHeader>
+            <CardTitle>Impact Assessment</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-4 gap-4">
+              <div>
+                <Label>Additional Hours</Label>
+                <Input name="hours" value={formData.hours} onChange={handleInputChange} placeholder="8" />
+              </div>
+              <div>
+                <Label>Additional Cost</Label>
+                <Input name="cost" value={formData.cost} onChange={handleInputChange} placeholder={`${currencySymbol}12000`} />
+              </div>
+              <div>
+                <Label>New End Date</Label>
+                <Input type="date" name="newEndDate" value={formData.newEndDate} onChange={handleInputChange} />
+              </div>
+              <div>
+                <Label>&nbsp;</Label>
+                <div className="text-sm text-gray-500 pt-2">
+                  Per hour: {currency === "INR" ? "₹1500" : "$45"}
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <div className="mt-6 flex justify-end gap-4">
+        <Button onClick={generatePDF} disabled={isGenerating} className="gap-2">
+          {isGenerating ? "Generating..." : <><Download className="w-4 h-4" /> Generate CR PDF</>}
+        </Button>
+      </div>
+    </PageWrapper>
   );
 }

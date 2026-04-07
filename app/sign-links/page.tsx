@@ -4,7 +4,8 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
-import { Link2, Copy, FileSignature, Send, CheckCircle2 } from "lucide-react";
+import { PageWrapper } from "@/components/page-wrapper";
+import { Link2, Copy, CheckCircle2 } from "lucide-react";
 
 export default function SignatureLinksPage() {
   const [formData, setFormData] = useState({
@@ -33,76 +34,56 @@ export default function SignatureLinksPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-2xl mx-auto">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">E-Signature Links</h1>
-          <p className="text-gray-600 mt-1">Generate signing links to send to clients</p>
-        </div>
+    <PageWrapper title="E-Signature Links" description="Generate signing links to send to clients" active="sign-links">
+      <div className="grid gap-6 max-w-2xl">
+        <Card>
+          <CardHeader>
+            <CardTitle>Generate Link</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div>
+              <Label>Client Name</Label>
+              <Input value={formData.clientName} onChange={(e) => setFormData({ ...formData, clientName: e.target.value })} placeholder="Client Company" />
+            </div>
+            <div>
+              <Label>Document Name</Label>
+              <Input value={formData.documentName} onChange={(e) => setFormData({ ...formData, documentName: e.target.value })} placeholder="Contract - Project Name" />
+            </div>
+            <div>
+              <Label>Base URL</Label>
+              <Input value={formData.baseUrl} onChange={(e) => setFormData({ ...formData, baseUrl: e.target.value })} placeholder="https://your-domain.com" />
+            </div>
+            <Button onClick={generateLink} className="w-full gap-2">
+              <Link2 className="w-4 h-4" /> Generate Signing Link
+            </Button>
+          </CardContent>
+        </Card>
 
-        <div className="grid gap-6">
+        {generatedLink && (
           <Card>
             <CardHeader>
-              <CardTitle>Generate Link</CardTitle>
+              <CardTitle>Signing Link Generated</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div>
-                <Label>Client Name</Label>
-                <Input
-                  value={formData.clientName}
-                  onChange={(e) => setFormData({ ...formData, clientName: e.target.value })}
-                  placeholder="Client Company"
-                />
+              <div className="flex gap-2">
+                <Input value={generatedLink} readOnly className="font-mono text-sm" />
+                <Button variant="outline" onClick={copyLink}>
+                  {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
+                </Button>
               </div>
-              <div>
-                <Label>Document Name</Label>
-                <Input
-                  value={formData.documentName}
-                  onChange={(e) => setFormData({ ...formData, documentName: e.target.value })}
-                  placeholder="Contract - Project Name"
-                />
+              <div className="bg-blue-50 p-4 rounded-md text-sm text-blue-700">
+                <p className="font-medium mb-1">How to use:</p>
+                <ol className="list-decimal list-inside space-y-1">
+                  <li>Send this link to {formData.clientName || "the client"}</li>
+                  <li>Client enters their name and email</li>
+                  <li>Signature is logged with timestamp and IP</li>
+                  <li>You can view signatures in your CRM</li>
+                </ol>
               </div>
-              <div>
-                <Label>Base URL</Label>
-                <Input
-                  value={formData.baseUrl}
-                  onChange={(e) => setFormData({ ...formData, baseUrl: e.target.value })}
-                  placeholder="https://your-domain.com"
-                />
-              </div>
-              <Button onClick={generateLink} className="w-full gap-2">
-                <Link2 className="w-4 h-4" />
-                Generate Signing Link
-              </Button>
             </CardContent>
           </Card>
-
-          {generatedLink && (
-            <Card>
-              <CardHeader>
-                <CardTitle>Signing Link Generated</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex gap-2">
-                  <Input value={generatedLink} readOnly className="font-mono text-sm" />
-                  <Button variant="outline" onClick={copyLink}>
-                    {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
-                  </Button>
-                </div>
-                <div className="bg-blue-50 p-4 rounded-md text-sm text-blue-700">
-                  <p className="font-medium mb-1">How to use:</p>
-                  <ol className="list-decimal list-inside space-y-1">
-                    <li>Send this link to {formData.clientName || "the client"}</li>
-                    <li>Client enters their name and email</li>
-                    <li>Signature is logged with timestamp and IP</li>
-                    <li>You can view signatures in your CRM</li>
-                  </ol>
-                </div>
-              </CardContent>
-            </Card>
-          )}
-        </div>
+        )}
       </div>
-    </div>
+    </PageWrapper>
   );
 }

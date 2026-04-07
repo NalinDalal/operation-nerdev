@@ -4,7 +4,8 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
-import { Plus, Trash2, Edit2, Save, X, Users, Search, ArrowUp, ArrowDown, DollarSign } from "lucide-react";
+import { PageWrapper } from "@/components/page-wrapper";
+import { Plus, Trash2, Save, Users, Search } from "lucide-react";
 
 interface Client {
   id: string;
@@ -24,7 +25,6 @@ const defaultClients: Client[] = [
 
 export default function ClientsPage() {
   const [clients, setClients] = useState<Client[]>([]);
-  const [editingId, setEditingId] = useState<string | null>(null);
   const [showAddForm, setShowAddForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<string>("all");
@@ -102,171 +102,165 @@ export default function ClientsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Client CRM</h1>
-            <p className="text-gray-600 mt-1">Track your clients and pipeline</p>
-          </div>
-          <Button onClick={() => setShowAddForm(true)} className="gap-2">
-            <Plus className="w-4 h-4" /> Add Client
-          </Button>
-        </div>
+    <PageWrapper title="Client CRM" description="Track your clients and pipeline" active="clients">
+      <div className="flex justify-end mb-6">
+        <Button onClick={() => setShowAddForm(true)} className="gap-2">
+          <Plus className="w-4 h-4" /> Add Client
+        </Button>
+      </div>
 
-        <div className="grid grid-cols-4 gap-4 mb-8">
-          <Card>
-            <CardContent className="pt-4">
-              <div className="text-2xl font-bold">{stats.total}</div>
-              <div className="text-sm text-gray-500">Total Clients</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-4">
-              <div className="text-2xl font-bold text-yellow-600">{stats.leads}</div>
-              <div className="text-sm text-gray-500">Leads</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-4">
-              <div className="text-2xl font-bold text-blue-600">{stats.active}</div>
-              <div className="text-sm text-gray-500">Active Projects</div>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent className="pt-4">
-              <div className="text-2xl font-bold text-green-600">₹{stats.revenue.toLocaleString()}</div>
-              <div className="text-sm text-gray-500">Total Billed</div>
-            </CardContent>
-          </Card>
-        </div>
-
-        <Card className="mb-6">
+      <div className="grid grid-cols-4 gap-4 mb-6">
+        <Card>
           <CardContent className="pt-4">
-            <div className="flex gap-4">
-              <div className="flex-1 relative">
-                <Search className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
-                <Input 
-                  placeholder="Search clients..." 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
-                />
-              </div>
-              <select 
-                value={filter} 
-                onChange={(e) => setFilter(e.target.value)}
-                className="px-3 py-2 border border-input rounded-md bg-background text-sm"
-              >
-                <option value="all">All Status</option>
-                <option value="lead">Lead</option>
-                <option value="active">Active</option>
-                <option value="delivered">Delivered</option>
-                <option value="retainer">Retainer</option>
-              </select>
-            </div>
+            <div className="text-2xl font-bold">{stats.total}</div>
+            <div className="text-sm text-gray-500">Total Clients</div>
           </CardContent>
         </Card>
-
-        {showAddForm && (
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle>Add New Client</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid md:grid-cols-3 gap-4">
-                <div>
-                  <Label>Company Name *</Label>
-                  <Input value={newClient.name} onChange={(e) => setNewClient({ ...newClient, name: e.target.value })} placeholder="Company Name" />
-                </div>
-                <div>
-                  <Label>Contact Person</Label>
-                  <Input value={newClient.contact} onChange={(e) => setNewClient({ ...newClient, contact: e.target.value })} placeholder="Name" />
-                </div>
-                <div>
-                  <Label>Email</Label>
-                  <Input value={newClient.email} onChange={(e) => setNewClient({ ...newClient, email: e.target.value })} placeholder="email@company.com" />
-                </div>
-                <div>
-                  <Label>Country</Label>
-                  <select value={newClient.country} onChange={(e) => setNewClient({ ...newClient, country: e.target.value as "INR" | "USD" })} className="w-full px-3 py-2 border border-input rounded-md bg-background text-sm">
-                    <option value="INR">India (INR)</option>
-                    <option value="USD">International (USD)</option>
-                  </select>
-                </div>
-                <div>
-                  <Label>Status</Label>
-                  <select value={newClient.status} onChange={(e) => setNewClient({ ...newClient, status: e.target.value as any })} className="w-full px-3 py-2 border border-input rounded-md bg-background text-sm">
-                    <option value="lead">Lead</option>
-                    <option value="active">Active</option>
-                    <option value="delivered">Delivered</option>
-                    <option value="retainer">Retainer</option>
-                  </select>
-                </div>
-                <div>
-                  <Label>Total Billed</Label>
-                  <Input type="number" value={newClient.totalBilled} onChange={(e) => setNewClient({ ...newClient, totalBilled: parseInt(e.target.value) })} placeholder="0" />
-                </div>
-                <div className="md:col-span-3">
-                  <Label>Project Name</Label>
-                  <Input value={newClient.projectName} onChange={(e) => setNewClient({ ...newClient, projectName: e.target.value })} placeholder="Project Name" />
-                </div>
-              </div>
-              <div className="flex gap-2 mt-4">
-                <Button onClick={addClient} className="gap-2"><Save className="w-4 h-4" /> Save</Button>
-                <Button variant="outline" onClick={() => setShowAddForm(false)}>Cancel</Button>
-              </div>
-            </CardContent>
-          </Card>
-        )}
-
         <Card>
-          <CardContent className="p-0">
-            <table className="w-full">
-              <thead className="border-b bg-gray-50">
-                <tr>
-                  <th className="text-left p-4 text-sm font-medium text-gray-500">Client</th>
-                  <th className="text-left p-4 text-sm font-medium text-gray-500">Project</th>
-                  <th className="text-left p-4 text-sm font-medium text-gray-500">Status</th>
-                  <th className="text-right p-4 text-sm font-medium text-gray-500">Total Billed</th>
-                  <th className="text-right p-4 text-sm font-medium text-gray-500">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredClients.length === 0 ? (
-                  <tr>
-                    <td colSpan={5} className="p-8 text-center text-gray-500">No clients found</td>
-                  </tr>
-                ) : filteredClients.map((client) => (
-                  <tr key={client.id} className="border-b">
-                    <td className="p-4">
-                      <div className="font-medium">{client.name}</div>
-                      <div className="text-sm text-gray-500">{client.contact} • {client.email}</div>
-                    </td>
-                    <td className="p-4">
-                      <div className="text-sm">{client.projectName}</div>
-                      <div className="text-xs text-gray-400">{client.country}</div>
-                    </td>
-                    <td className="p-4">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(client.status)}`}>
-                        {client.status.charAt(0).toUpperCase() + client.status.slice(1)}
-                      </span>
-                    </td>
-                    <td className="p-4 text-right font-medium">
-                      {client.country === "INR" ? "₹" : "$"}{client.totalBilled.toLocaleString()}
-                    </td>
-                    <td className="p-4 text-right">
-                      <Button variant="ghost" size="sm" onClick={() => deleteClient(client.id)}>
-                        <Trash2 className="w-4 h-4 text-red-500" />
-                      </Button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <CardContent className="pt-4">
+            <div className="text-2xl font-bold text-yellow-600">{stats.leads}</div>
+            <div className="text-sm text-gray-500">Leads</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="pt-4">
+            <div className="text-2xl font-bold text-blue-600">{stats.active}</div>
+            <div className="text-sm text-gray-500">Active Projects</div>
+          </CardContent>
+        </Card>
+        <Card>
+          <CardContent className="pt-4">
+            <div className="text-2xl font-bold text-green-600">₹{stats.revenue.toLocaleString()}</div>
+            <div className="text-sm text-gray-500">Total Billed</div>
           </CardContent>
         </Card>
       </div>
-    </div>
+
+      <Card className="mb-6">
+        <CardContent className="pt-4">
+          <div className="flex gap-4">
+            <div className="flex-1 relative">
+              <Search className="w-4 h-4 absolute left-3 top-3 text-gray-400" />
+              <Input 
+                placeholder="Search clients..." 
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10"
+              />
+            </div>
+            <select 
+              value={filter} 
+              onChange={(e) => setFilter(e.target.value)}
+              className="px-3 py-2 border border-input rounded-md bg-background text-sm"
+            >
+              <option value="all">All Status</option>
+              <option value="lead">Lead</option>
+              <option value="active">Active</option>
+              <option value="delivered">Delivered</option>
+              <option value="retainer">Retainer</option>
+            </select>
+          </div>
+        </CardContent>
+      </Card>
+
+      {showAddForm && (
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle>Add New Client</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-3 gap-4">
+              <div>
+                <Label>Company Name *</Label>
+                <Input value={newClient.name} onChange={(e) => setNewClient({ ...newClient, name: e.target.value })} placeholder="Company Name" />
+              </div>
+              <div>
+                <Label>Contact Person</Label>
+                <Input value={newClient.contact} onChange={(e) => setNewClient({ ...newClient, contact: e.target.value })} placeholder="Name" />
+              </div>
+              <div>
+                <Label>Email</Label>
+                <Input value={newClient.email} onChange={(e) => setNewClient({ ...newClient, email: e.target.value })} placeholder="email@company.com" />
+              </div>
+              <div>
+                <Label>Country</Label>
+                <select value={newClient.country} onChange={(e) => setNewClient({ ...newClient, country: e.target.value as "INR" | "USD" })} className="w-full px-3 py-2 border border-input rounded-md bg-background text-sm">
+                  <option value="INR">India (INR)</option>
+                  <option value="USD">International (USD)</option>
+                </select>
+              </div>
+              <div>
+                <Label>Status</Label>
+                <select value={newClient.status} onChange={(e) => setNewClient({ ...newClient, status: e.target.value as any })} className="w-full px-3 py-2 border border-input rounded-md bg-background text-sm">
+                  <option value="lead">Lead</option>
+                  <option value="active">Active</option>
+                  <option value="delivered">Delivered</option>
+                  <option value="retainer">Retainer</option>
+                </select>
+              </div>
+              <div>
+                <Label>Total Billed</Label>
+                <Input type="number" value={newClient.totalBilled} onChange={(e) => setNewClient({ ...newClient, totalBilled: parseInt(e.target.value) })} placeholder="0" />
+              </div>
+              <div className="md:col-span-3">
+                <Label>Project Name</Label>
+                <Input value={newClient.projectName} onChange={(e) => setNewClient({ ...newClient, projectName: e.target.value })} placeholder="Project Name" />
+              </div>
+            </div>
+            <div className="flex gap-2 mt-4">
+              <Button onClick={addClient} className="gap-2"><Save className="w-4 h-4" /> Save</Button>
+              <Button variant="outline" onClick={() => setShowAddForm(false)}>Cancel</Button>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      <Card>
+        <CardContent className="p-0">
+          <table className="w-full">
+            <thead className="border-b bg-gray-50">
+              <tr>
+                <th className="text-left p-4 text-sm font-medium text-gray-500">Client</th>
+                <th className="text-left p-4 text-sm font-medium text-gray-500">Project</th>
+                <th className="text-left p-4 text-sm font-medium text-gray-500">Status</th>
+                <th className="text-right p-4 text-sm font-medium text-gray-500">Total Billed</th>
+                <th className="text-right p-4 text-sm font-medium text-gray-500">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredClients.length === 0 ? (
+                <tr>
+                  <td colSpan={5} className="p-8 text-center text-gray-500">No clients found</td>
+                </tr>
+              ) : filteredClients.map((client) => (
+                <tr key={client.id} className="border-b">
+                  <td className="p-4">
+                    <div className="font-medium">{client.name}</div>
+                    <div className="text-sm text-gray-500">{client.contact} • {client.email}</div>
+                  </td>
+                  <td className="p-4">
+                    <div className="text-sm">{client.projectName}</div>
+                    <div className="text-xs text-gray-400">{client.country}</div>
+                  </td>
+                  <td className="p-4">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(client.status)}`}>
+                      {client.status.charAt(0).toUpperCase() + client.status.slice(1)}
+                    </span>
+                  </td>
+                  <td className="p-4 text-right font-medium">
+                    {client.country === "INR" ? "₹" : "$"}{client.totalBilled.toLocaleString()}
+                  </td>
+                  <td className="p-4 text-right">
+                    <Button variant="ghost" size="sm" onClick={() => deleteClient(client.id)}>
+                      <Trash2 className="w-4 h-4 text-red-500" />
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </CardContent>
+      </Card>
+    </PageWrapper>
   );
 }
