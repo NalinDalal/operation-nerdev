@@ -1,11 +1,12 @@
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
-import { Plus, Trash2, Printer, FileText, ScanLine, ArrowRight, Download, Save } from "lucide-react";
+import { Plus, Trash2, Printer, FileText, ScanLine, ArrowRight, Download, Save, Send, Mail } from "lucide-react";
 import { InvoiceFormData, LineItem } from "@/utils/types";
 
 const CURRENCIES = [
@@ -164,6 +165,70 @@ export default function InvoicePage() {
         window.print();
     };
 
+    const [sending, setSending] = useState(false);
+
+    const handleSend = async () => {
+        if (!formData.billTo.email) {
+            alert('Please enter client email address');
+            return;
+        }
+
+        setSending(true);
+
+        try {
+            const currencySymbol = getCurrencySymbol();
+            const subtotal = calculateSubtotal();
+            const discount = calculateDiscount();
+            const tax = calculateTax();
+            const total = calculateTotal();
+            const taxPercent = formData.taxPercent || 18;
+
+            const data = {
+                invoice_number: formData.invoiceNumber,
+                client_name: formData.billTo.name,
+                project_name: formData.title,
+                delivery_date: new Date(formData.invoiceDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+                due_date: new Date(formData.dueDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }),
+                subtotal: subtotal.toFixed(2),
+                discount: discount.toFixed(2),
+                tax_percent: taxPercent.toString(),
+                tax: tax.toFixed(2),
+                total: total.toFixed(2),
+                bank_name: formData.bankDetails.accountName,
+                account_number: formData.bankDetails.accountNumber,
+                ifsc_code: formData.bankDetails.swiftIfsc,
+                payment_link: '#',
+            };
+
+            const response = await fetch('/api/send-invoice', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    to: formData.billTo.email,
+                    data,
+                    currencySymbol,
+                    subtotal,
+                    discount,
+                    tax,
+                    total,
+                }),
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert('Invoice sent successfully!');
+            } else {
+                alert('Failed to send invoice: ' + (result.error || 'Unknown error'));
+            }
+        } catch (error) {
+            console.error('Error sending email:', error);
+            alert('Error sending email');
+        } finally {
+            setSending(false);
+        }
+    };
+
     const handleDownload = async () => {
         if (!printRef.current) return;
         
@@ -179,11 +244,11 @@ export default function InvoicePage() {
             })
             .join('\n');
 
-        const htmlContent = `
-            <!DOCTYPE html>
+        const invoiceNo = formData.invoiceNumber || 'invoice';
+        const htmlContent = `<!DOCTYPE html>
             <html>
             <head>
-                <title>Invoice ${formData.invoiceNumber || 'Invoice'}</title>
+                <title>Invoice ${invoiceNo}</title>
                 <style>${styles}</style>
             </head>
             <body style="margin:0;padding:20px;">
@@ -196,7 +261,7 @@ export default function InvoicePage() {
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
-        a.download = `invoice-${formData.invoiceNumber || 'invoice'}.html`;
+        a.download = `invoice-${invoiceNo}.html`;
         a.click();
         URL.revokeObjectURL(url);
         
@@ -242,30 +307,43 @@ export default function InvoicePage() {
     return (
         <div className="min-h-screen bg-[var(--background)]">
             <div className="bg-[var(--card)] border-b border-[var(--border)] sticky top-0 z-50 print:hidden">
-                <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-4">
+                <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-3">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-4">
-                            <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden">
-                                <Image src="/logo-dark.png" alt="Logo" width={40} height={40} className="object-contain" />
+                        <Link href="/" className="flex items-center gap-3">
+                            <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
+                                <img src="/logo-dark.png" alt="Logo" width={32} height={32} className="object-contain" />
                             </div>
                             <div>
-                                <h1 className="text-xl font-semibold" style={{ fontFamily: "var(--font-display)" }}>
+                                <h1 className="text-lg font-semibold" style={{ fontFamily: "var(--font-display)" }}>
                                     Invoice Creator
                                 </h1>
                                 <p className="text-xs text-[var(--muted-foreground)]">Design professional invoices</p>
                             </div>
+                        </Link>
+                        <div className="flex items-center gap-1 p-1 bg-[var(--background)] rounded-lg border border-[var(--border)]">
+                            <Link
+                                href="/"
+                                className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-[var(--card)] text-[var(--foreground)] shadow-sm"
+                            >
+                                <FileText className="w-4 h-4" />
+                                Invoice
+                            </Link>
+                            <Link
+                                href="/email"
+                                className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                            >
+                                <Mail className="w-4 h-4" />
+                                Email
+                            </Link>
+                            <Link
+                                href="/parse"
+                                className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
+                            >
+                                <ScanLine className="w-4 h-4" />
+                                Parse
+                            </Link>
                         </div>
                         <div className="flex items-center gap-3">
-                            <Button
-                                variant="ghost"
-                                asChild
-                                className="gap-2 text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-                            >
-                                <a href="/parse">
-                                    <ScanLine className="w-4 h-4" />
-                                    Parse Invoice
-                                </a>
-                            </Button>
                             <Button
                                 onClick={handlePrint}
                                 className="gap-2"
@@ -289,6 +367,15 @@ export default function InvoicePage() {
                             >
                                 <Save className="w-4 h-4" />
                                 Save
+                            </Button>
+                            <Button
+                                onClick={handleSend}
+                                disabled={sending}
+                                className="gap-2"
+                                style={{ background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' }}
+                            >
+                                <Send className="w-4 h-4" />
+                                {sending ? 'Sending...' : 'Send'}
                             </Button>
                         </div>
                     </div>
