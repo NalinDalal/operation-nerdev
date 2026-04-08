@@ -4,7 +4,7 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
-import { Header } from "@/components/header";
+import { Nav } from "@/components/nav";
 import { Plus, Trash2, Save, Users, Search, Mail, Send, CheckSquare, Square } from "lucide-react";
 
 interface Client {
@@ -191,8 +191,16 @@ export default function ClientsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Header title="Client CRM" subtitle="Track your clients and pipeline" active="clients" 
-        action={<Button onClick={() => setShowAddForm(true)} className="gap-2"><Plus className="w-4 h-4" />Add Client</Button>} />
+      <Nav 
+        title="Client CRM" 
+        subtitle="Track your clients and pipeline" 
+        active="clients"
+        action={
+          <Button onClick={() => setShowAddForm(true)} className="gap-2">
+            <Plus className="w-4 h-4" />Add Client
+          </Button>
+        }
+      />
 
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
         <div className="grid grid-cols-4 gap-4 mb-6">

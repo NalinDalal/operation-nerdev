@@ -7,11 +7,30 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'Helvetica',
     lineHeight: 1.5,
+    backgroundColor: '#fafafa',
+  },
+  brandHeader: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 6,
+    backgroundColor: '#22c55e',
+  },
+  brandWatermark: {
+    position: 'absolute',
+    bottom: 30,
+    right: 40,
+    fontSize: 60,
+    fontWeight: 'bold',
+    color: '#e5e5e5',
+    zIndex: 0,
   },
   header: {
     fontSize: 16,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#1a1a1a',
   },
   subHeader: {
     fontSize: 12,
@@ -57,6 +76,10 @@ const styles = StyleSheet.create({
 const ProposalPDF = ({ data }: { data: ProposalData }) => (
   <Document>
     <Page size="A4" style={styles.page}>
+      <View style={styles.brandHeader} />
+      <Text style={styles.brandWatermark}>NerDev</Text>
+      
+      <View style={{ zIndex: 1, position: 'relative' }}>
       <Text style={styles.header}>PROJECT PROPOSAL</Text>
       
       <View style={styles.section}>
@@ -83,7 +106,7 @@ const ProposalPDF = ({ data }: { data: ProposalData }) => (
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>2. PROPOSED SOLUTION</Text>
-        <Text style={styles.bold}>What We'll Build:</Text>
+        <Text style={styles.bold}>What We&apos;ll Build:</Text>
         {data.components.map((item, index) => (
           <Text key={index}>- {item}</Text>
         ))}
@@ -126,14 +149,14 @@ const ProposalPDF = ({ data }: { data: ProposalData }) => (
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>5. WHAT'S INCLUDED</Text>
+        <Text style={styles.sectionTitle}>5. WHAT&apos;S INCLUDED</Text>
         {data.included.map((item, index) => (
           <Text key={index}>- {item}</Text>
         ))}
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>6. WHAT'S NOT INCLUDED</Text>
+        <Text style={styles.sectionTitle}>6. WHAT&apos;S NOT INCLUDED</Text>
         {data.notIncluded.map((item, index) => (
           <Text key={index}>- {item}</Text>
         ))}
@@ -169,8 +192,9 @@ const ProposalPDF = ({ data }: { data: ProposalData }) => (
       </View>
 
       <Text style={{ marginTop: 30, fontSize: 9, color: '#666' }}>
-        Thank you for considering NerDev. Let's build something great.
+        Thank you for considering NerDev. Let&apos;s build something great.
       </Text>
+      </View>
     </Page>
   </Document>
 );

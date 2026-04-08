@@ -5,7 +5,7 @@ import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
 import { generateProposalPDF } from "@/lib/proposals/proposal-pdf";
-import { Header } from "@/components/header";
+import { Nav } from "@/components/nav";
 import { Download } from "lucide-react";
 
 interface Phase {
@@ -107,8 +107,17 @@ export default function ProposalsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Header title="Proposal Generator" subtitle="Create professional project proposals" active="proposals"
-        action={<div className="flex gap-2"><Button variant={currency === "INR" ? "default" : "outline"} onClick={() => handleCurrencyChange("INR")}>INR</Button><Button variant={currency === "USD" ? "default" : "outline"} onClick={() => handleCurrencyChange("USD")}>USD</Button></div>} />
+      <Nav 
+        title="Proposal Generator" 
+        subtitle="Create professional project proposals" 
+        active="proposals"
+        action={
+          <div className="flex gap-2">
+            <Button variant={currency === "INR" ? "default" : "outline"} onClick={() => setCurrency("INR")}>INR</Button>
+            <Button variant={currency === "USD" ? "default" : "outline"} onClick={() => setCurrency("USD")}>USD</Button>
+          </div>
+        }
+      />
 
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
         <div className="grid md:grid-cols-2 gap-6">
@@ -238,7 +247,7 @@ export default function ProposalsPage() {
 
           <Card className="md:col-span-2 border-[var(--border)] shadow-sm">
             <CardHeader>
-              <CardTitle>What's Included / Not Included</CardTitle>
+              <CardTitle>What&apos;s Included / Not Included</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>

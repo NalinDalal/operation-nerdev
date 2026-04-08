@@ -4,7 +4,7 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
-import { Header } from "@/components/header";
+import { Nav } from "@/components/nav";
 import { Document, Page, Text, View, StyleSheet, pdf } from "@react-pdf/renderer";
 import { Download, Plus } from "lucide-react";
 
@@ -193,7 +193,11 @@ export default function ScopeOfWorkPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Header title="Scope of Work" subtitle="Create detailed SoW to attach to contracts" active="scope-of-work" />
+      <Nav 
+        title="Scope of Work" 
+        subtitle="Create detailed SoW to attach to contracts" 
+        active="scope-of-work" 
+      />
 
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
         <div className="grid md:grid-cols-2 gap-6">

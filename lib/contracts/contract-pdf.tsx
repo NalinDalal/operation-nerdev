@@ -7,11 +7,39 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'Helvetica',
     lineHeight: 1.5,
+    backgroundColor: '#fafafa',
+  },
+  backgroundPattern: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: '#fafafa',
+    zIndex: -1,
   },
   header: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 20,
+    color: '#1a1a1a',
+  },
+  brandHeader: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 6,
+    backgroundColor: '#22c55e',
+  },
+  brandWatermark: {
+    position: 'absolute',
+    bottom: 30,
+    right: 40,
+    fontSize: 60,
+    fontWeight: 'bold',
+    color: '#e5e5e5',
+    zIndex: 0,
   },
   section: {
     marginBottom: 15,
@@ -52,6 +80,10 @@ const styles = StyleSheet.create({
 const ContractPDF = ({ data }: { data: ContractData }) => (
   <Document>
     <Page size="A4" style={styles.page}>
+      <View style={styles.brandHeader} />
+      <Text style={styles.brandWatermark}>NerDev</Text>
+      
+      <View style={{ zIndex: 1, position: 'relative' }}>
       <Text style={styles.header}>FREELANCE DEVELOPMENT CONTRACT</Text>
       
       <View style={styles.section}>
@@ -136,7 +168,7 @@ const ContractPDF = ({ data }: { data: ContractData }) => (
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>8. LIABILITY</Text>
-        <Text>NerDev's liability is limited to the total amount paid under this contract.</Text>
+        <Text>NerDev&apos;s liability is limited to the total amount paid under this contract.</Text>
       </View>
 
       <View style={styles.section}>
@@ -162,6 +194,7 @@ const ContractPDF = ({ data }: { data: ContractData }) => (
             <Text>Date: _______________</Text>
           </View>
         </View>
+      </View>
       </View>
     </Page>
   </Document>

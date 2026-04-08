@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { Nav } from "@/components/nav";
 import { 
   FileText, 
   Mail, 
@@ -54,10 +55,11 @@ const services = [
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-[var(--background)]">
+      <Nav active="home" />
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <div className="w-16 h-16 rounded-xl flex items-center justify-center mx-auto mb-4 overflow-hidden">
-            <img src="/logo-dark.png" alt="NerDev" width={64} height={64} className="object-contain" />
+          <div className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto mb-4 overflow-hidden border-2 border-[#22c55e]">
+            <img src="/logo-dark.png" alt="NerDev" width={80} height={80} className="object-contain" />
           </div>
           <h1 className="text-4xl font-bold text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
             NerDev Tools

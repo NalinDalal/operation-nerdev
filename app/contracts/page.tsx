@@ -5,7 +5,7 @@ import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
 import { generateContractPDF } from "@/lib/contracts/contract-pdf";
-import { Header } from "@/components/header";
+import { Nav } from "@/components/nav";
 import { DollarSign, Download } from "lucide-react";
 
 export default function ContractsPage() {
@@ -91,8 +91,17 @@ export default function ContractsPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Header title="Contract Generator" subtitle="Generate freelance development contracts" active="contracts" 
-        action={<div className="flex gap-2"><Button variant={currency === "INR" ? "default" : "outline"} onClick={() => handleCurrencyChange("INR")}>INR</Button><Button variant={currency === "USD" ? "default" : "outline"} onClick={() => handleCurrencyChange("USD")}>USD</Button></div>} />
+      <Nav 
+        title="Contract Generator" 
+        subtitle="Generate freelance development contracts" 
+        active="contracts"
+        action={
+          <div className="flex gap-2">
+            <Button variant={currency === "INR" ? "default" : "outline"} onClick={() => setCurrency("INR")}>INR</Button>
+            <Button variant={currency === "USD" ? "default" : "outline"} onClick={() => setCurrency("USD")}>USD</Button>
+          </div>
+        }
+      />
 
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
         <div className="grid md:grid-cols-2 gap-6">

@@ -4,7 +4,7 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
-import { Header } from "@/components/header";
+import { Nav } from "@/components/nav";
 import { Link2, Copy, CheckCircle2 } from "lucide-react";
 
 export default function SignatureLinksPage() {
@@ -35,7 +35,11 @@ export default function SignatureLinksPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Header title="E-Signature Links" subtitle="Generate signing links to send to clients" active="sign-links" />
+      <Nav 
+        title="E-Signature Links" 
+        subtitle="Generate signing links to send to clients" 
+        active="sign-links" 
+      />
 
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
         <div className="grid gap-6 max-w-2xl">

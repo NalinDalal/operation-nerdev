@@ -8,6 +8,7 @@ import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
 import { Plus, Trash2, Printer, FileText, ScanLine, ArrowRight, Download, Save, Send, Mail } from "lucide-react";
 import { InvoiceFormData, LineItem } from "@/utils/types";
+import { Nav } from "@/components/nav";
 
 const CURRENCIES = [
     { code: "INR", symbol: "₹", name: "Indian Rupee" },
@@ -306,82 +307,48 @@ export default function InvoicePage() {
 
     return (
         <div className="min-h-screen bg-[var(--background)]">
-            <div className="bg-[var(--card)] border-b border-[var(--border)] sticky top-0 z-50 print:hidden">
-                <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-3">
-                    <div className="flex items-center justify-between">
-                        <Link href="/" className="flex items-center gap-3">
-                            <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
-                                <img src="/logo-dark.png" alt="Logo" width={32} height={32} className="object-contain" />
-                            </div>
-                            <div>
-                                <h1 className="text-lg font-semibold" style={{ fontFamily: "var(--font-display)" }}>
-                                    Invoice Creator
-                                </h1>
-                                <p className="text-xs text-[var(--muted-foreground)]">Design professional invoices</p>
-                            </div>
-                        </Link>
-                        <div className="flex items-center gap-1 p-1 bg-[var(--background)] rounded-lg border border-[var(--border)]">
-                            <Link
-                                href="/"
-                                className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium bg-[var(--card)] text-[var(--foreground)] shadow-sm"
-                            >
-                                <FileText className="w-4 h-4" />
-                                Invoice
-                            </Link>
-                            <Link
-                                href="/email"
-                                className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-                            >
-                                <Mail className="w-4 h-4" />
-                                Email
-                            </Link>
-                            <Link
-                                href="/parse"
-                                className="flex items-center gap-2 px-4 py-2 rounded-md text-sm font-medium text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-                            >
-                                <ScanLine className="w-4 h-4" />
-                                Parse
-                            </Link>
-                        </div>
-                        <div className="flex items-center gap-3">
-                            <Button
-                                onClick={handlePrint}
-                                className="gap-2"
-                                style={{ background: 'linear-gradient(135deg, #4c3d6e 0%, #6b5a8c 100%)' }}
-                            >
-                                <Printer className="w-4 h-4" />
-                                Print
-                            </Button>
-                            <Button
-                                onClick={handleDownload}
-                                variant="outline"
-                                className="gap-2"
-                            >
-                                <Download className="w-4 h-4" />
-                                Download
-                            </Button>
-                            <Button
-                                onClick={saveCompanySettings}
-                                variant="ghost"
-                                className="gap-2"
-                            >
-                                <Save className="w-4 h-4" />
-                                Save
-                            </Button>
-                            <Button
-                                onClick={handleSend}
-                                disabled={sending}
-                                className="gap-2"
-                                style={{ background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' }}
-                            >
-                                <Send className="w-4 h-4" />
-                                {sending ? 'Sending...' : 'Send'}
-                            </Button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+            <Nav 
+                title="Invoice Creator" 
+                subtitle="Design professional invoices" 
+                active="invoice"
+                action={
+                    <>
+                        <Button
+                            onClick={handlePrint}
+                            className="gap-2"
+                            style={{ background: 'linear-gradient(135deg, #4c3d6e 0%, #6b5a8c 100%)' }}
+                        >
+                            <Printer className="w-4 h-4" />
+                            Print
+                        </Button>
+                        <Button
+                            onClick={handleDownload}
+                            variant="outline"
+                            className="gap-2"
+                        >
+                            <Download className="w-4 h-4" />
+                            Download
+                        </Button>
+                        <Button
+                            onClick={saveCompanySettings}
+                            variant="ghost"
+                            className="gap-2"
+                        >
+                            <Save className="w-4 h-4" />
+                            Save
+                        </Button>
+                        <Button
+                            onClick={handleSend}
+                            disabled={sending}
+                            className="gap-2"
+                            style={{ background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' }}
+                        >
+                            <Send className="w-4 h-4" />
+                            {sending ? 'Sending...' : 'Send'}
+                        </Button>
+                    </>
+                }
+            />
             <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
                 <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
                     <div className="xl:col-span-5 space-y-6 print:hidden overflow-y-auto form-scroll" style={{ maxHeight: 'calc(100vh - 180px)' }}>

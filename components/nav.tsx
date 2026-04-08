@@ -1,13 +1,26 @@
 "use client";
+import React from "react";
 import Link from "next/link";
 import { FileText, Mail, FileSignature, FileCheck, ScanLine, Users, FileStack, ArrowRightLeft, Home } from "lucide-react";
 
-export function Nav({ active }: { active: 'home' | 'invoice' | 'email' | 'parse' | 'contracts' | 'proposals' | 'scope-of-work' | 'change-request' | 'clients' | 'sign-links' }) {
+export function Nav({ active, title, subtitle, action }: { active?: 'home' | 'invoice' | 'email' | 'parse' | 'contracts' | 'proposals' | 'scope-of-work' | 'change-request' | 'clients' | 'sign-links'; title?: string; subtitle?: string; action?: React.ReactNode }) {
   return (
     <nav className="bg-[var(--card)] border-b border-[var(--border)] sticky top-0 z-50">
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-4">
+          {title ? (
+            <Link href="/" className="flex items-center gap-3">
+              <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
+                <img src="/logo-dark.png" alt="Logo" width={32} height={32} className="object-contain" />
+              </div>
+              <div>
+                <h1 className="text-lg font-semibold" style={{ fontFamily: "var(--font-display)" }}>
+                  {title}
+                </h1>
+                {subtitle && <p className="text-xs text-[var(--muted-foreground)]">{subtitle}</p>}
+              </div>
+            </Link>
+          ) : (
             <Link href="/" className="flex items-center gap-3">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden">
                 <img src="/logo-dark.png" alt="Logo" width={32} height={32} className="object-contain" />
@@ -16,7 +29,7 @@ export function Nav({ active }: { active: 'home' | 'invoice' | 'email' | 'parse'
                 NerDev Tools
               </span>
             </Link>
-          </div>
+          )}
           <div className="flex items-center gap-1 p-1 bg-[var(--background)] rounded-lg border border-[var(--border)]">
             <Link
               href="/"
@@ -128,7 +141,9 @@ export function Nav({ active }: { active: 'home' | 'invoice' | 'email' | 'parse'
               <span className="text-xs">Sign</span>
             </Link>
           </div>
-          <div className="w-[120px]" />
+          <div className="flex items-center gap-3">
+            {action}
+          </div>
         </div>
       </div>
     </nav>

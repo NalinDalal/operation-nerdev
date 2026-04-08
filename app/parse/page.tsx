@@ -7,6 +7,7 @@ import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/card";
 import { Loader2, Upload, ArrowRight, FileText, AlertCircle } from "lucide-react";
 import { InvoiceData, InvoiceFormData } from "@/utils/types";
+import { Nav } from "@/components/nav";
 
 function generateId(): string {
   return Math.random().toString(36).substring(2, 9);
@@ -287,38 +288,7 @@ export default function ParsePage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <div className="bg-[var(--card)] border-b border-[var(--border)] sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div 
-                className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden"
-              >
-                <Image src="/logo.svg" alt="Logo" width={40} height={40} className="object-contain" />
-              </div>
-              <div>
-                <h1 
-                  className="text-xl font-semibold" 
-                  style={{ fontFamily: "var(--font-display)" }}
-                >
-                  Invoice Parser
-                </h1>
-                <p className="text-xs text-[var(--muted-foreground)]">Extract data from invoices</p>
-              </div>
-            </div>
-            <Button 
-              variant="ghost" 
-              asChild 
-              className="gap-2 text-[var(--muted-foreground)] hover:text-[var(--foreground)]"
-            >
-              <a href="/">
-                <FileText className="w-4 h-4" />
-                Create Invoice
-              </a>
-            </Button>
-          </div>
-        </div>
-      </div>
+      <Nav title="Invoice Parser" subtitle="Extract data from invoices" active="parse" />
 
       <div className="max-w-4xl mx-auto px-4 lg:px-8 py-8">
         <Card className="border-[var(--border)] shadow-sm mb-6">

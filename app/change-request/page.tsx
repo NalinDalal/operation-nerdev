@@ -4,7 +4,7 @@ import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
-import { Header } from "@/components/header";
+import { Nav } from "@/components/nav";
 import { Document, Page, Text, View, StyleSheet, pdf } from "@react-pdf/renderer";
 import { Download } from "lucide-react";
 
@@ -116,8 +116,17 @@ export default function ChangeRequestPage() {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Header title="Change Request" subtitle="Formalize scope changes mid-project" active="change-request"
-        action={<div className="flex gap-2"><Button variant={currency === "INR" ? "default" : "outline"} onClick={() => setCurrency("INR")}>INR</Button><Button variant={currency === "USD" ? "default" : "outline"} onClick={() => setCurrency("USD")}>USD</Button></div>} />
+      <Nav 
+        title="Change Request" 
+        subtitle="Formalize scope changes mid-project" 
+        active="change-request"
+        action={
+          <div className="flex gap-2">
+            <Button variant={currency === "INR" ? "default" : "outline"} onClick={() => setCurrency("INR")}>INR</Button>
+            <Button variant={currency === "USD" ? "default" : "outline"} onClick={() => setCurrency("USD")}>USD</Button>
+          </div>
+        }
+      />
 
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
         <div className="grid md:grid-cols-2 gap-6">

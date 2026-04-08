@@ -3,7 +3,7 @@ import path from "path";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { Header } from "@/components/header";
+import { Nav } from "@/components/nav";
 
 interface DocPageProps {
   params: Promise<{ slug: string[] }>;
@@ -73,7 +73,7 @@ export default async function DocPage({ params }: DocPageProps) {
 
   return (
     <div className="min-h-screen bg-[var(--background)]">
-      <Header title="Documentation" subtitle="Templates and guides" />
+      <Nav title="Documentation" subtitle="Templates and guides" />
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
         <Link href="/" className="inline-flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] mb-6 transition-colors">
           <ArrowLeft className="w-4 h-4" /> Back to Tools
