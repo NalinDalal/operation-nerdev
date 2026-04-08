@@ -142,7 +142,7 @@ export async function sendInvoiceEmail(
   const html = generateInvoiceEmail(data, currencySymbol, subtotal, discount, tax, total);
   
   return resend.emails.send({
-    from: 'NerDev <onboarding@resend.dev>',
+    from: 'NerDev <hello@nerdev.in>',
     to,
     subject: `Invoice #${data.invoice_number} – NerDev`,
     html,

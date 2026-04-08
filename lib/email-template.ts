@@ -103,7 +103,7 @@ export async function sendEmail(
   const html = generateEmail(template, data);
   
   return resend.emails.send({
-    from: 'NerDev <onboarding@resend.dev>',
+    from: 'NerDev <hello@nerdev.in>',
     to,
     cc: cc || undefined,
     subject,

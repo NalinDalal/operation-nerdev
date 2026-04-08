@@ -5,7 +5,7 @@ import { Input } from "@/components/input";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
 import { Header } from "@/components/header";
-import { Plus, Trash2, Save, Users, Search } from "lucide-react";
+import { Plus, Trash2, Save, Users, Search, Mail, Send, CheckSquare, Square } from "lucide-react";
 
 interface Client {
   id: string;
@@ -28,6 +28,8 @@ export default function ClientsPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [filter, setFilter] = useState<string>("all");
+  const [selectedClients, setSelectedClients] = useState<Set<string>>(new Set());
+  const [sendingBulk, setSendingBulk] = useState(false);
   const [newClient, setNewClient] = useState<Partial<Client>>({
     name: "",
     contact: "",
@@ -93,6 +95,92 @@ export default function ClientsPage() {
     const matchesFilter = filter === "all" || c.status === filter;
     return matchesSearch && matchesFilter;
   });
+
+  const toggleSelect = (id: string) => {
+    const newSelected = new Set(selectedClients);
+    if (newSelected.has(id)) {
+      newSelected.delete(id);
+    } else {
+      newSelected.add(id);
+    }
+    setSelectedClients(newSelected);
+  };
+
+  const toggleSelectAll = () => {
+    if (selectedClients.size === filteredClients.length) {
+      setSelectedClients(new Set());
+    } else {
+      setSelectedClients(new Set(filteredClients.map(c => c.id)));
+    }
+  };
+
+  const sendQuickEmail = async (client: Client, template: string) => {
+    if (!client.email) {
+      alert('No email address for this client');
+      return;
+    }
+    try {
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          to: client.email,
+          subject: template === 'welcome' ? 'Welcome aboard' : 'Following up',
+          template,
+          data: {
+            first_name: client.contact || client.name,
+            company_name: client.name,
+            topic: client.projectName || 'your project',
+          },
+        }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        alert(`Email sent to ${client.email}`);
+      } else {
+        alert('Failed: ' + result.error);
+      }
+    } catch (error) {
+      alert('Error sending email');
+    }
+  };
+
+  const sendBulkOutreach = async () => {
+    const selected = clients.filter(c => selectedClients.has(c.id) && c.email);
+    if (selected.length === 0) {
+      alert('No clients with email selected');
+      return;
+    }
+    setSendingBulk(true);
+    let sent = 0;
+    let failed = 0;
+    for (const client of selected) {
+      try {
+        const response = await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            to: client.email,
+            subject: "Let's build something",
+            template: 'outreach',
+            data: {
+              first_name: client.contact || client.name,
+              company_name: client.name,
+              topic: client.projectName || 'your project',
+            },
+          }),
+        });
+        const result = await response.json();
+        if (result.success) sent++;
+        else failed++;
+      } catch (e) {
+        failed++;
+      }
+    }
+    setSendingBulk(false);
+    setSelectedClients(new Set());
+    alert(`Sent ${sent} emails, ${failed} failed`);
+  };
 
   const stats = {
     total: clients.length,
@@ -215,9 +303,32 @@ export default function ClientsPage() {
 
         <Card className="border-[var(--border)] shadow-sm">
           <CardContent className="p-0">
+            {selectedClients.size > 0 && (
+              <div className="p-3 bg-blue-50 border-b border-blue-100 flex items-center justify-between">
+                <span className="text-sm text-blue-700">{selectedClients.size} selected</span>
+                <Button 
+                  size="sm" 
+                  onClick={sendBulkOutreach}
+                  disabled={sendingBulk}
+                  className="gap-2 bg-blue-600 hover:bg-blue-700"
+                >
+                  <Send className="w-4 h-4" />
+                  {sendingBulk ? 'Sending...' : 'Send Outreach'}
+                </Button>
+              </div>
+            )}
             <table className="w-full">
               <thead className="border-b border-[var(--border)] bg-[var(--background)]">
                 <tr>
+                  <th className="w-10 p-4">
+                    <button onClick={toggleSelectAll}>
+                      {selectedClients.size === filteredClients.length && filteredClients.length > 0 ? (
+                        <CheckSquare className="w-4 h-4" />
+                      ) : (
+                        <Square className="w-4 h-4" />
+                      )}
+                    </button>
+                  </th>
                   <th className="text-left p-4 text-sm font-medium text-[var(--muted-foreground)]">Client</th>
                   <th className="text-left p-4 text-sm font-medium text-[var(--muted-foreground)]">Project</th>
                   <th className="text-left p-4 text-sm font-medium text-[var(--muted-foreground)]">Status</th>
@@ -228,10 +339,19 @@ export default function ClientsPage() {
               <tbody>
                 {filteredClients.length === 0 ? (
                   <tr>
-                    <td colSpan={5} className="p-8 text-center text-[var(--muted-foreground)]">No clients found</td>
+                    <td colSpan={6} className="p-8 text-center text-[var(--muted-foreground)]">No clients found</td>
                   </tr>
                 ) : filteredClients.map((client) => (
                   <tr key={client.id} className="border-b border-[var(--border)]">
+                    <td className="p-4">
+                      <button onClick={() => toggleSelect(client.id)}>
+                        {selectedClients.has(client.id) ? (
+                          <CheckSquare className="w-4 h-4" />
+                        ) : (
+                          <Square className="w-4 h-4" />
+                        )}
+                      </button>
+                    </td>
                     <td className="p-4">
                       <div className="font-medium">{client.name}</div>
                       <div className="text-sm text-[var(--muted-foreground)]">{client.contact} • {client.email}</div>
@@ -249,9 +369,27 @@ export default function ClientsPage() {
                       {client.country === "INR" ? "₹" : "$"}{client.totalBilled.toLocaleString()}
                     </td>
                     <td className="p-4 text-right">
-                      <Button variant="ghost" size="sm" onClick={() => deleteClient(client.id)}>
-                        <Trash2 className="w-4 h-4 text-red-500" />
-                      </Button>
+                      <div className="flex items-center justify-end gap-1">
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => sendQuickEmail(client, 'welcome')}
+                          title="Send Welcome"
+                        >
+                          <Mail className="w-4 h-4 text-green-600" />
+                        </Button>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => sendQuickEmail(client, 'followup')}
+                          title="Send Follow-up"
+                        >
+                          <Send className="w-4 h-4 text-blue-600" />
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => deleteClient(client.id)}>
+                          <Trash2 className="w-4 h-4 text-red-500" />
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}
