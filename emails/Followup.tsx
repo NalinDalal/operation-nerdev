@@ -5,7 +5,9 @@ interface FollowupData {
   topic?: string;
 }
 
-export default function FollowupEmail({ first_name = "[Name]", topic = "your project" }: FollowupData) {
+export default function FollowupEmail({ first_name = "", topic = "your project" }: FollowupData) {
+  const displayName = first_name.trim() || "there";
+  const displayTopic = topic.trim() || "your project";
   return (
     <Html>
       <Head />
@@ -22,10 +24,10 @@ export default function FollowupEmail({ first_name = "[Name]", topic = "your pro
               Just following up
             </Text>
             <Text style={{ fontSize: "15px", color: "#555", lineHeight: 1.7, margin: "0 0 16px" }}>
-              Hi {first_name},
+              Hi {displayName},
             </Text>
             <Text style={{ fontSize: "15px", color: "#555", lineHeight: 1.7, margin: "0 0 28px" }}>
-              Wanted to check in on our earlier conversation about {topic}. 
+              Wanted to check in on our earlier conversation about {displayTopic}. 
               Let me know if you have any questions or if there's anything I can help with!
             </Text>
           </Container>

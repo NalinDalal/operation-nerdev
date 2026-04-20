@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/button";
 import { Input } from "@/components/input";
 import { Label } from "@/components/label";
@@ -25,8 +25,8 @@ export default function ContractsPage() {
     milestone2Amount: "",
     finalAmount: "",
     totalAmount: "",
-    hourlyRate: "1500",
-    jurisdiction: "Madhya Pradesh, India",
+    hourlyRate: "",
+    jurisdiction: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -36,19 +36,33 @@ export default function ContractsPage() {
   const handleCurrencyChange = (curr: "INR" | "USD") => {
     setCurrency(curr);
     if (curr === "USD") {
-      setFormData({
-        ...formData,
-        jurisdiction: "India",
-        hourlyRate: "45",
-      });
+      setFormData(prev => ({
+        ...prev,
+        jurisdiction: prev.jurisdiction || "India",
+        hourlyRate: prev.hourlyRate || "45",
+      }));
     } else {
-      setFormData({
-        ...formData,
-        jurisdiction: "Madhya Pradesh, India",
-        hourlyRate: "1500",
-      });
+      setFormData(prev => ({
+        ...prev,
+        jurisdiction: prev.jurisdiction || "Madhya Pradesh, India",
+        hourlyRate: prev.hourlyRate || "1500",
+      }));
     }
   };
+
+  useEffect(() => {
+    const settings = localStorage.getItem("companySettings");
+    if (settings) {
+      const s = JSON.parse(settings);
+      setFormData(prev => ({
+        ...prev,
+        providerName: s.name || "",
+        providerAddress: s.address || "",
+        jurisdiction: s.jurisdiction || (currency === "USD" ? "India" : "Madhya Pradesh, India"),
+        hourlyRate: s.hourlyRate || (currency === "USD" ? "45" : "1500"),
+      }));
+    }
+  }, [currency]);
 
   const generatePDF = async () => {
     setIsGenerating(true);

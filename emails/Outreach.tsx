@@ -5,7 +5,9 @@ interface OutreachData {
   company_name?: string;
 }
 
-export default function OutreachEmail({ first_name = "[Name]", company_name = "[Company]" }: OutreachData) {
+export default function OutreachEmail({ first_name = "", company_name = "" }: OutreachData) {
+  const displayName = first_name.trim() || "there";
+  const displayCompany = company_name.trim() || "your company";
   return (
     <Html>
       <Head />
@@ -22,10 +24,10 @@ export default function OutreachEmail({ first_name = "[Name]", company_name = "[
               Let's build something.
             </Text>
             <Text style={{ fontSize: "15px", color: "#555", lineHeight: 1.7, margin: "0 0 16px" }}>
-              Hi {first_name},
+              Hi {displayName},
             </Text>
             <Text style={{ fontSize: "15px", color: "#555", lineHeight: 1.7, margin: "0 0 28px" }}>
-              Came across {company_name} and had a few ideas on how we could help you scale the tech side. 
+              Came across {displayCompany} and had a few ideas on how we could help you scale the tech side. 
               We've shipped similar work for early-stage startups — happy to share examples or jump on a quick call.
             </Text>
 

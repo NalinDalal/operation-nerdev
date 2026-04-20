@@ -23,24 +23,32 @@ const TEMPLATES = {
   outreach: {
     name: 'Outreach',
     subject: "Let's build something",
-    generate: (data: Record<string, string>) => `
-      <p style="font-size:22px;font-weight:500;color:#111111;margin:0 0 8px;">Let's build something.</p>
-      <p style="font-size:15px;color:#555555;line-height:1.7;margin:0 0 16px;">Hi ${data.first_name || '[Name]'},</p>
-      <p style="font-size:15px;color:#555555;line-height:1.7;margin:0 0 28px;">
-        Came across ${data.company_name || '[Company]'} and had a few ideas on how we could help you scale the tech side.
-      </p>
-    `,
+    generate: (data: Record<string, string>) => {
+      const firstName = data.first_name?.trim() || "there";
+      const companyName = data.company_name?.trim() || "your company";
+      return `
+        <p style="font-size:22px;font-weight:500;color:#111111;margin:0 0 8px;">Let's build something.</p>
+        <p style="font-size:15px;color:#555555;line-height:1.7;margin:0 0 16px;">Hi ${firstName},</p>
+        <p style="font-size:15px;color:#555555;line-height:1.7;margin:0 0 28px;">
+          Came across ${companyName} and had a few ideas on how we could help you scale the tech side.
+        </p>
+      `;
+    },
   },
   followup: {
     name: 'Follow-up',
     subject: 'Following up',
-    generate: (data: Record<string, string>) => `
-      <p style="font-size:22px;font-weight:500;color:#111111;margin:0 0 8px;">Just following up</p>
-      <p style="font-size:15px;color:#555555;line-height:1.7;margin:0 0 16px;">Hi ${data.first_name || '[Name]'},</p>
-      <p style="font-size:15px;color:#555555;line-height:1.7;margin:0 0 28px;">
-        Wanted to check in on our earlier conversation about ${data.topic || 'your project'}. Let me know if you have any questions!
-      </p>
-    `,
+    generate: (data: Record<string, string>) => {
+      const firstName = data.first_name?.trim() || "there";
+      const topic = data.topic?.trim() || "your project";
+      return `
+        <p style="font-size:22px;font-weight:500;color:#111111;margin:0 0 8px;">Just following up</p>
+        <p style="font-size:15px;color:#555555;line-height:1.7;margin:0 0 16px;">Hi ${firstName},</p>
+        <p style="font-size:15px;color:#555555;line-height:1.7;margin:0 0 28px;">
+          Wanted to check in on our earlier conversation about ${topic}. Let me know if you have any questions!
+        </p>
+      `;
+    },
   },
 };
 
@@ -49,6 +57,7 @@ type TemplateKey = keyof typeof TEMPLATES;
 export default function EmailPage() {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateKey>('welcome');
   const [sending, setSending] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [formData, setFormData] = useState({
     to: '',
     cc: '',
@@ -60,11 +69,39 @@ export default function EmailPage() {
 
   const updateField = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+    if (errors[field]) {
+      setErrors(prev => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {};
+    
+    if (!formData.to) {
+      newErrors.to = 'Recipient email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.to)) {
+      newErrors.to = 'Please enter a valid email address';
+    }
+
+    if (selectedTemplate === 'outreach') {
+      if (!formData.first_name?.trim()) {
+        newErrors.first_name = 'First name is required for outreach';
+      }
+      if (!formData.company_name?.trim()) {
+        newErrors.company_name = 'Company name is required for outreach';
+      }
+    }
+
+    if (selectedTemplate === 'followup' && !formData.first_name?.trim()) {
+      newErrors.first_name = 'First name is required for follow-up';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleSend = async () => {
-    if (!formData.to) {
-      alert('Please enter recipient email');
+    if (!validateForm()) {
       return;
     }
 
@@ -151,13 +188,15 @@ export default function EmailPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="text-xs uppercase tracking-wider text-[var(--muted-foreground)]">To</Label>
+                  <Label className="text-xs uppercase tracking-wider text-[var(--muted-foreground)]">To *</Label>
                   <Input
                     type="email"
                     value={formData.to}
                     onChange={(e) => updateField('to', e.target.value)}
                     placeholder="recipient@example.com"
+                    className={errors.to ? 'border-[var(--destructive)]' : ''}
                   />
+                  {errors.to && <p className="text-xs text-[var(--destructive)]">{errors.to}</p>}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs uppercase tracking-wider text-[var(--muted-foreground)]">CC</Label>
@@ -177,20 +216,28 @@ export default function EmailPage() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="text-xs uppercase tracking-wider text-[var(--muted-foreground)]">First Name</Label>
+                  <Label className={`text-xs uppercase tracking-wider text-[var(--muted-foreground)]`}>
+                    First Name {selectedTemplate !== 'welcome' && '*'}
+                  </Label>
                   <Input
                     value={formData.first_name}
                     onChange={(e) => updateField('first_name', e.target.value)}
                     placeholder="John"
+                    className={errors.first_name ? 'border-[var(--destructive)]' : ''}
                   />
+                  {errors.first_name && <p className="text-xs text-[var(--destructive)]">{errors.first_name}</p>}
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-xs uppercase tracking-wider text-[var(--muted-foreground)]">Company</Label>
+                  <Label className={`text-xs uppercase tracking-wider text-[var(--muted-foreground)]`}>
+                    Company {selectedTemplate === 'outreach' && '*'}
+                  </Label>
                   <Input
                     value={formData.company_name}
                     onChange={(e) => updateField('company_name', e.target.value)}
                     placeholder="Acme Corp"
+                    className={errors.company_name ? 'border-[var(--destructive)]' : ''}
                   />
+                  {errors.company_name && <p className="text-xs text-[var(--destructive)]">{errors.company_name}</p>}
                 </div>
                 <div className="space-y-2">
                   <Label className="text-xs uppercase tracking-wider text-[var(--muted-foreground)]">Topic</Label>
