@@ -55,8 +55,19 @@ const defaultFormData: InvoiceFormData = {
 
 export default function InvoicePage() {
     const [formData, setFormData] = useState<InvoiceFormData>(defaultFormData);
+    const [activeSection, setActiveSection] = useState<string>('details');
     const printRef = useRef<HTMLDivElement>(null);
     const [mounted, setMounted] = useState(false);
+
+    const sections = [
+        { id: 'details', label: 'Invoice Details' },
+        { id: 'from', label: 'From' },
+        { id: 'to', label: 'Bill To' },
+        { id: 'items', label: 'Line Items' },
+        { id: 'adjustments', label: 'Adjustments' },
+        { id: 'bank', label: 'Bank Details' },
+        { id: 'notes', label: 'Notes & Signature' },
+    ];
 
     useEffect(() => {
         setMounted(true);
@@ -315,8 +326,8 @@ export default function InvoicePage() {
                     <>
                         <Button
                             onClick={handlePrint}
+                            variant="brand"
                             className="gap-2"
-                            style={{ background: 'linear-gradient(135deg, #4c3d6e 0%, #6b5a8c 100%)' }}
                         >
                             <Printer className="w-4 h-4" />
                             Print
@@ -340,8 +351,8 @@ export default function InvoicePage() {
                         <Button
                             onClick={handleSend}
                             disabled={sending}
+                            variant="success"
                             className="gap-2"
-                            style={{ background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' }}
                         >
                             <Send className="w-4 h-4" />
                             {sending ? 'Sending...' : 'Send'}

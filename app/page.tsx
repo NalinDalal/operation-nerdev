@@ -58,10 +58,10 @@ export default function HomePage() {
       <Nav active="home" />
       <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-12">
         <div className="text-center mb-12">
-          <div className="w-20 h-20 rounded-xl flex items-center justify-center mx-auto mb-4 overflow-hidden border-2 border-[#22c55e]">
-            <img src="/logo-dark.png" alt="NerDev" width={80} height={80} className="object-contain" />
+          <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-5 overflow-hidden bg-[#4c3d6e] shadow-lg shadow-[#4c3d6e]/20">
+            <img src="/logo-dark.png" alt="NerDev" width={56} height={56} className="object-contain brightness-0 invert" />
           </div>
-          <h1 className="text-4xl font-bold text-[var(--foreground)] mb-2" style={{ fontFamily: "var(--font-display)" }}>
+          <h1 className="text-4xl font-bold text-[var(--foreground)] mb-3" style={{ fontFamily: "var(--font-display)" }}>
             NerDev Tools
           </h1>
           <p className="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
@@ -72,29 +72,29 @@ export default function HomePage() {
         <div className="grid gap-10">
           {services.map((category) => (
             <div key={category.category}>
-              <h2 className="text-sm font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-4">
+              <h2 className="text-sm font-semibold text-[var(--muted-foreground)] uppercase tracking-wider mb-5">
                 {category.category}
               </h2>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {category.items.map((service) => (
                   <Link
                     key={service.name}
                     href={service.href}
-                    className="group bg-[var(--card)] border-[var(--border)] rounded-xl p-5 hover:border-[var(--muted-foreground)] hover:shadow-md transition-all"
+                    className="group bg-[var(--card)] border border-[var(--border)] rounded-xl p-5 hover:border-[#4c3d6e]/30 hover:shadow-lg hover:shadow-[#4c3d6e]/10 transition-all duration-200"
                   >
                     <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-lg bg-[var(--background)] flex items-center justify-center group-hover:bg-[var(--muted-foreground)] transition-colors">
-                        <service.icon className="w-5 h-5 text-[var(--foreground)]" />
+                      <div className="w-11 h-11 rounded-xl bg-[#4c3d6e]/10 flex items-center justify-center group-hover:bg-[#4c3d6e] transition-colors">
+                        <service.icon className="w-5 h-5 text-[#4c3d6e] group-hover:text-white transition-colors" />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-semibold text-[var(--foreground)] group-hover:text-[var(--foreground)]">
+                        <h3 className="font-semibold text-[var(--foreground)] group-hover:text-[#4c3d6e] transition-colors">
                           {service.name}
                         </h3>
-                        <p className="text-sm text-[var(--muted-foreground)] mt-1">
+                        <p className="text-sm text-[var(--muted-foreground)] mt-1 leading-relaxed">
                           {service.description}
                         </p>
                       </div>
-                      <ArrowRight className="w-4 h-4 text-[var(--muted-foreground)] group-hover:text-[var(--foreground)] group-hover:translate-x-1 transition-all" />
+                      <ArrowRight className="w-4 h-4 text-[var(--muted-foreground)] group-hover:text-[#4c3d6e] group-hover:translate-x-1 transition-all" />
                     </div>
                   </Link>
                 ))}
@@ -103,17 +103,17 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="mt-12 pt-8 border-t border-[var(--border)]">
+        <div className="mt-14 pt-8 border-t border-[var(--border)]">
           <div className="flex flex-wrap gap-4 justify-center text-sm text-[var(--muted-foreground)]">
-            <Link href="/docs/contracts/freelance-contract-template.md" className="hover:text-[var(--foreground)]">Contract Template</Link>
+            <Link href="/docs/contracts/freelance-contract-template.md" className="hover:text-[#4c3d6e] transition-colors">Contract Template</Link>
             <span>•</span>
-            <Link href="/docs/proposals/proposal-template-inr.md" className="hover:text-[var(--foreground)]">Proposal Template</Link>
+            <Link href="/docs/proposals/proposal-template-inr.md" className="hover:text-[#4c3d6e] transition-colors">Proposal Template</Link>
             <span>•</span>
-            <Link href="/docs/pricing-reference.md" className="hover:text-[var(--foreground)]">Pricing Guide</Link>
+            <Link href="/docs/pricing-reference.md" className="hover:text-[#4c3d6e] transition-colors">Pricing Guide</Link>
             <span>•</span>
-            <Link href="/docs/discovery-call-questions.md" className="hover:text-[var(--foreground)]">Discovery Questions</Link>
+            <Link href="/docs/discovery-call-questions.md" className="hover:text-[#4c3d6e] transition-colors">Discovery Questions</Link>
             <span>•</span>
-            <Link href="/docs/client-onboarding-flow.md" className="hover:text-[var(--foreground)]">Onboarding Flow</Link>
+            <Link href="/docs/client-onboarding-flow.md" className="hover:text-[#4c3d6e] transition-colors">Onboarding Flow</Link>
           </div>
         </div>
       </div>

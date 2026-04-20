@@ -31,6 +31,11 @@
   --cream: #faf9f7;
   --warm-gray: #6b6966;
   --ink: #1a1918;
+  
+  --success: #22c55e;
+  --success-foreground: #ffffff;
+  --info: #3b82f6;
+  --info-foreground: #ffffff;
 }
 
 @theme inline {
@@ -78,6 +83,10 @@
     --border: #3d3c3a;
     --input: #3d3c3a;
     --ring: #faf9f7;
+    
+    --lavender-deep: #7c6ea8;
+    --lavender-muted: #6b5a8c;
+    --lavender-light: #2d2540;
   }
 }
 
@@ -235,11 +244,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .preview-scroll::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #4c3d6e 0%, #8b7aa8 100%);
+  background: var(--lavender-deep);
   border-radius: 5px;
   border: 2px solid #f0efed;
 }
 
 .preview-scroll::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #3d2e5e 0%, #7b6a98 100%);
+  background: var(--lavender-muted);
 }

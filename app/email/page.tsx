@@ -110,8 +110,8 @@ export default function EmailPage() {
           <Button
             onClick={handleSend}
             disabled={sending}
+            variant="success"
             className="gap-2"
-            style={{ background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)' }}
           >
             {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
             {sending ? 'Sending...' : 'Send'}
