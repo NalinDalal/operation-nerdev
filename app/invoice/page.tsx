@@ -8,8 +8,7 @@ import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
 import { Plus, Trash2, Printer, FileText, ScanLine, ArrowRight, Download, Save, Send, Mail } from "lucide-react";
 import { InvoiceFormData, LineItem } from "@/utils/types";
-import { Nav } from "@/components/nav";
-import { Logo } from "@/components/logo";
+import { SidebarLayout } from "@/components/sidebar";
 
 const CURRENCIES = [
     { code: "INR", symbol: "₹", name: "Indian Rupee" },
@@ -317,52 +316,30 @@ export default function InvoicePage() {
         }
     };
 
+    const actions = (
+        <>
+            <Button onClick={handlePrint} variant="primary" className="gap-2">
+                <Printer className="w-4 h-4" />
+                Print
+            </Button>
+            <Button onClick={handleDownload} variant="secondary" className="gap-2">
+                <Download className="w-4 h-4" />
+                Download
+            </Button>
+            <Button onClick={saveCompanySettings} variant="ghost" className="gap-2">
+                <Save className="w-4 h-4" />
+                Save
+            </Button>
+            <Button onClick={handleSend} disabled={sending} variant="primary" className="gap-2">
+                <Send className="w-4 h-4" />
+                {sending ? 'Sending...' : 'Send'}
+            </Button>
+        </>
+    );
+
     return (
-        <div className="min-h-screen bg-[var(--background)]">
-            <Nav 
-                title="Invoice Creator" 
-                subtitle="Design professional invoices" 
-                active="invoice"
-                action={
-                    <>
-                        <Button
-                            onClick={handlePrint}
-                            variant="primary"
-                            className="gap-2"
-                        >
-                            <Printer className="w-4 h-4" />
-                            Print
-                        </Button>
-                        <Button
-                            onClick={handleDownload}
-                            variant="secondary"
-                            className="gap-2"
-                        >
-                            <Download className="w-4 h-4" />
-                            Download
-                        </Button>
-                        <Button
-                            onClick={saveCompanySettings}
-                            variant="ghost"
-                            className="gap-2"
-                        >
-                            <Save className="w-4 h-4" />
-                            Save
-                        </Button>
-                        <Button
-                            onClick={handleSend}
-                            disabled={sending}
-                            variant="primary"
-                            className="gap-2"
-                        >
-                            <Send className="w-4 h-4" />
-                            {sending ? 'Sending...' : 'Send'}
-                        </Button>
-                    </>
-                }
-            />
-            <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
-                <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+        <SidebarLayout title="Invoice" action={actions}>
+            <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
                     <div className="xl:col-span-5 space-y-6 print:hidden overflow-y-auto form-scroll" style={{ maxHeight: 'calc(100vh - 180px)' }}>
                         <div
                             className={`space-y-6 transition-all duration-500 ${mounted ? 'opacity-100' : 'opacity-0'}`}
@@ -1048,7 +1025,7 @@ export default function InvoicePage() {
                         </div>
                     </div>
                 </div>
-            </div>
+        </SidebarLayout>
 
             <style jsx global>{`
         @media print {
@@ -1084,6 +1061,5 @@ export default function InvoicePage() {
           }
         }
       `}</style>
-        </div>
     );
 }
