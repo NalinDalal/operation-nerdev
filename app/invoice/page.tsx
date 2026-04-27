@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
 import { Plus, Trash2, Printer, FileText, ScanLine, ArrowRight, Download, Save, Send, Mail } from "lucide-react";
 import { InvoiceFormData, LineItem } from "@/utils/types";
 import { Nav } from "@/components/nav";
+import { Logo } from "@/components/logo";
 
 const CURRENCIES = [
     { code: "INR", symbol: "₹", name: "Indian Rupee" },
@@ -326,7 +327,7 @@ export default function InvoicePage() {
                     <>
                         <Button
                             onClick={handlePrint}
-                            variant="brand"
+                            variant="primary"
                             className="gap-2"
                         >
                             <Printer className="w-4 h-4" />
@@ -334,7 +335,7 @@ export default function InvoicePage() {
                         </Button>
                         <Button
                             onClick={handleDownload}
-                            variant="outline"
+                            variant="secondary"
                             className="gap-2"
                         >
                             <Download className="w-4 h-4" />
@@ -351,7 +352,7 @@ export default function InvoicePage() {
                         <Button
                             onClick={handleSend}
                             disabled={sending}
-                            variant="success"
+                            variant="primary"
                             className="gap-2"
                         >
                             <Send className="w-4 h-4" />
@@ -368,7 +369,7 @@ export default function InvoicePage() {
                         >
                             <Card className="border-[var(--border)] shadow-sm hover:shadow-md transition-shadow">
                                 <CardHeader className="pb-4">
-                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-display)" }}>
+                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-fraunces)" }}>
                                         Invoice Details
                                     </CardTitle>
                                 </CardHeader>
@@ -430,7 +431,7 @@ export default function InvoicePage() {
 
                             <Card className="border-[var(--border)] shadow-sm hover:shadow-md transition-shadow">
                                 <CardHeader className="pb-4">
-                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-display)" }}>
+                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-fraunces)" }}>
                                         From
                                     </CardTitle>
                                 </CardHeader>
@@ -477,7 +478,7 @@ export default function InvoicePage() {
 
                             <Card className="border-[var(--border)] shadow-sm hover:shadow-md transition-shadow">
                                 <CardHeader className="pb-4">
-                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-display)" }}>
+                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-fraunces)" }}>
                                         Bill To
                                     </CardTitle>
                                 </CardHeader>
@@ -524,12 +525,12 @@ export default function InvoicePage() {
 
                             <Card className="border-[var(--border)] shadow-sm hover:shadow-md transition-shadow">
                                 <CardHeader className="pb-4 flex flex-row items-center justify-between">
-                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-display)" }}>
+                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-fraunces)" }}>
                                         Line Items
                                     </CardTitle>
                                     <Button
                                         type="button"
-                                        variant="outline"
+                                        variant="secondary"
                                         size="sm"
                                         onClick={addLineItem}
                                         className="gap-1"
@@ -621,7 +622,7 @@ export default function InvoicePage() {
 
                             <Card className="border-[var(--border)] shadow-sm hover:shadow-md transition-shadow">
                                 <CardHeader className="pb-4">
-                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-display)" }}>
+                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-fraunces)" }}>
                                         Adjustments
                                     </CardTitle>
                                 </CardHeader>
@@ -671,7 +672,7 @@ export default function InvoicePage() {
 
                             <Card className="border-[var(--border)] shadow-sm hover:shadow-md transition-shadow">
                                 <CardHeader className="pb-4">
-                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-display)" }}>
+                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-fraunces)" }}>
                                         Bank Details
                                     </CardTitle>
                                 </CardHeader>
@@ -717,7 +718,7 @@ export default function InvoicePage() {
 
                             <Card className="border-[var(--border)] shadow-sm hover:shadow-md transition-shadow">
                                 <CardHeader className="pb-4">
-                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-display)" }}>
+                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-fraunces)" }}>
                                         Notes
                                     </CardTitle>
                                 </CardHeader>
@@ -733,7 +734,7 @@ export default function InvoicePage() {
 
                             <Card className="border-[var(--border)] shadow-sm hover:shadow-md transition-shadow">
                                 <CardHeader className="pb-4">
-                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-display)" }}>
+                                    <CardTitle className="text-lg font-medium" style={{ fontFamily: "var(--font-fraunces)" }}>
                                         Signature
                                     </CardTitle>
                                 </CardHeader>
@@ -780,7 +781,7 @@ export default function InvoicePage() {
                             <div className="flex items-center justify-between mb-4 print:hidden">
                                 <h2
                                     className="text-lg font-medium text-[var(--muted-foreground)]"
-                                    style={{ fontFamily: "var(--font-display)" }}
+                                    style={{ fontFamily: "var(--font-fraunces)" }}
                                 >
                                     Live Preview
                                 </h2>
@@ -788,7 +789,7 @@ export default function InvoicePage() {
 
                             <div
                                 ref={printRef}
-                                className="bg-white shadow-xl rounded-sm overflow-hidden print-container"
+                                className="bg-[var(--card)] shadow-xl rounded-sm overflow-hidden print-container"
                                 style={{
                                     fontFamily: "var(--font-body), Georgia, serif",
                                     boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.02)'
@@ -803,82 +804,82 @@ export default function InvoicePage() {
                                                     boxShadow: '0 8px 24px rgba(76, 61, 110, 0.3)'
                                                 }}
                                             >
-                                                <Image src="/logo-dark.png" alt="Logo" width={80} height={80} className="object-contain" />
+                                                <Logo size={80} className="rounded-lg" />
                                             </div>
                                             <div>
                                                 <h1
-                                                    className="text-4xl font-bold text-gray-900 tracking-tight"
-                                                    style={{ fontFamily: "var(--font-display)" }}
+                                                    className="text-4xl font-bold text-[var(--foreground)] tracking-tight"
+                                                    style={{ fontFamily: "var(--font-fraunces)" }}
                                                 >
                                                     {formData.title || "INVOICE"}
                                                 </h1>
                                                 {formData.invoiceNumber && (
-                                                    <p className="text-gray-400 text-sm mt-1">#{formData.invoiceNumber}</p>
+                                                    <p className="text-[var(--muted-foreground)] text-sm mt-1">#{formData.invoiceNumber}</p>
                                                 )}
                                             </div>
                                         </div>
 
                                         <div className="text-right">
                                             {formData.from.name && (
-                                                <p className="font-semibold text-gray-900 text-lg">{formData.from.name}</p>
+                                                <p className="font-semibold text-[var(--foreground)] text-lg">{formData.from.name}</p>
                                             )}
                                             {formData.from.address && (
-                                                <p className="text-gray-500 text-xs mt-2 whitespace-pre-line leading-relaxed">{formData.from.address}</p>
+                                                <p className="text-[var(--muted-foreground)] text-xs mt-2 whitespace-pre-line leading-relaxed">{formData.from.address}</p>
                                             )}
                                             {formData.from.email && (
-                                                <p className="text-gray-400 text-xs mt-2">{formData.from.email}</p>
+                                                <p className="text-[var(--muted-foreground)] text-xs mt-2">{formData.from.email}</p>
                                             )}
                                             {formData.from.taxId && (
-                                                <p className="text-gray-400 text-xs">Tax ID: {formData.from.taxId}</p>
+                                                <p className="text-[var(--muted-foreground)] text-xs">Tax ID: {formData.from.taxId}</p>
                                             )}
                                         </div>
                                     </div>
 
                                     <div className="grid grid-cols-2 gap-12 mb-12">
                                         <div>
-                                            <h3 className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold mb-4">Paid To</h3>
+                                            <h3 className="text-xs uppercase tracking-[0.2em] text-[var(--muted-foreground)] font-semibold mb-4">Paid To</h3>
                                             {formData.from.name ? (
                                                 <>
-                                                    <p className="font-semibold text-gray-900 text-lg mb-2">{formData.from.name}</p>
+                                                    <p className="font-semibold text-[var(--foreground)] text-lg mb-2">{formData.from.name}</p>
                                                     {formData.from.address && (
-                                                        <p className="text-gray-500 text-xs whitespace-pre-line leading-relaxed mb-2">{formData.from.address}</p>
+                                                        <p className="text-[var(--muted-foreground)] text-xs whitespace-pre-line leading-relaxed mb-2">{formData.from.address}</p>
                                                     )}
                                                     {formData.from.email && (
-                                                        <p className="text-gray-400 text-xs mb-1">{formData.from.email}</p>
+                                                        <p className="text-[var(--muted-foreground)] text-xs mb-1">{formData.from.email}</p>
                                                     )}
                                                     {formData.from.taxId && (
-                                                        <p className="text-gray-400 text-xs">Tax ID: {formData.from.taxId}</p>
+                                                        <p className="text-[var(--muted-foreground)] text-xs">Tax ID: {formData.from.taxId}</p>
                                                     )}
                                                 </>
                                             ) : (
-                                                <p className="text-gray-300 text-sm">—</p>
+                                                <p className="text-[var(--muted-foreground)] text-sm">—</p>
                                             )}
                                         </div>
 
                                         <div className="text-right">
-                                            <h3 className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold mb-4">Bill To</h3>
+                                            <h3 className="text-xs uppercase tracking-[0.2em] text-[var(--muted-foreground)] font-semibold mb-4">Bill To</h3>
                                             {formData.billTo.name ? (
                                                 <>
-                                                    <p className="font-semibold text-gray-900 text-lg mb-2">{formData.billTo.name}</p>
+                                                    <p className="font-semibold text-[var(--foreground)] text-lg mb-2">{formData.billTo.name}</p>
                                                     {formData.billTo.address && (
-                                                        <p className="text-gray-500 text-xs whitespace-pre-line leading-relaxed mb-2">{formData.billTo.address}</p>
+                                                        <p className="text-[var(--muted-foreground)] text-xs whitespace-pre-line leading-relaxed mb-2">{formData.billTo.address}</p>
                                                     )}
                                                     {formData.billTo.email && (
-                                                        <p className="text-gray-400 text-xs mb-1">{formData.billTo.email}</p>
+                                                        <p className="text-[var(--muted-foreground)] text-xs mb-1">{formData.billTo.email}</p>
                                                     )}
                                                     {formData.billTo.taxId && (
-                                                        <p className="text-gray-400 text-xs">Tax ID: {formData.billTo.taxId}</p>
+                                                        <p className="text-[var(--muted-foreground)] text-xs">Tax ID: {formData.billTo.taxId}</p>
                                                     )}
                                                 </>
                                             ) : (
-                                                <p className="text-gray-300 text-sm">—</p>
+                                                <p className="text-[var(--muted-foreground)] text-sm">—</p>
                                             )}
                                             
                                             <div className="mt-6">
-                                                <h3 className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold mb-4">Details</h3>
+                                                <h3 className="text-xs uppercase tracking-[0.2em] text-[var(--muted-foreground)] font-semibold mb-4">Details</h3>
                                                 {formData.invoiceDate && (
-                                                    <p className="text-gray-600 mb-2">
-                                                        <span className="text-gray-400">Date:</span>{" "}
+                                                    <p className="text-[var(--foreground)] mb-2">
+                                                        <span className="text-[var(--muted-foreground)]">Date:</span>{" "}
                                                         {new Date(formData.invoiceDate).toLocaleDateString('en-US', {
                                                             year: 'numeric',
                                                             month: 'long',
@@ -887,8 +888,8 @@ export default function InvoicePage() {
                                                     </p>
                                                 )}
                                                 {formData.dueDate && (
-                                                    <p className="text-gray-600">
-                                                        <span className="text-gray-400">Due:</span>{" "}
+                                                    <p className="text-[var(--foreground)]">
+                                                        <span className="text-[var(--muted-foreground)]">Due:</span>{" "}
                                                         {new Date(formData.dueDate).toLocaleDateString('en-US', {
                                                             year: 'numeric',
                                                             month: 'long',
@@ -903,12 +904,12 @@ export default function InvoicePage() {
                                     <div className="mb-8">
                                         <table className="w-full">
                                             <thead>
-                                                <tr className="border-b-2 border-gray-200">
-                                                    <th className="text-left py-4 text-xs uppercase tracking-[0.15em] text-gray-400 font-semibold w-full">Description</th>
-                                                    <th className="text-center py-4 text-xs uppercase tracking-[0.15em] text-gray-400 font-semibold w-20">Qty</th>
-                                                    <th className="text-right py-4 text-xs uppercase tracking-[0.15em] text-gray-400 font-semibold w-28">Price</th>
-                                                    <th className="text-right py-4 text-xs uppercase tracking-[0.15em] text-gray-400 font-semibold w-24">Discount</th>
-                                                    <th className="text-right py-4 text-xs uppercase tracking-[0.15em] text-gray-400 font-semibold w-32">Amount</th>
+                                                <tr className="border-b-2 border-[var(--border)]">
+                                                    <th className="text-left py-4 text-xs uppercase tracking-[0.15em] text-[var(--muted-foreground)] font-semibold w-full">Description</th>
+                                                    <th className="text-center py-4 text-xs uppercase tracking-[0.15em] text-[var(--muted-foreground)] font-semibold w-20">Qty</th>
+                                                    <th className="text-right py-4 text-xs uppercase tracking-[0.15em] text-[var(--muted-foreground)] font-semibold w-28">Price</th>
+                                                    <th className="text-right py-4 text-xs uppercase tracking-[0.15em] text-[var(--muted-foreground)] font-semibold w-24">Discount</th>
+                                                    <th className="text-right py-4 text-xs uppercase tracking-[0.15em] text-[var(--muted-foreground)] font-semibold w-32">Amount</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -917,21 +918,21 @@ export default function InvoicePage() {
                                                     const discount = itemTotal * ((item.discountPercent || 0) / 100);
                                                     const netAmount = itemTotal - discount;
                                                     return (
-                                                        <tr key={item.id} className="border-b border-gray-100">
+                                                        <tr key={item.id} className="border-b border-[var(--border)]">
                                                             <td className="py-4">
-                                                                <p className="font-medium text-gray-800">{item.name || "—"}</p>
+                                                                <p className="font-medium text-[var(--foreground)]">{item.name || "—"}</p>
                                                                 {item.description && (
-                                                                    <p className="text-gray-400 text-xs mt-1">{item.description}</p>
+                                                                    <p className="text-[var(--muted-foreground)] text-xs mt-1">{item.description}</p>
                                                                 )}
                                                             </td>
-                                                            <td className="text-center py-4 text-gray-600">{item.quantity || 1}</td>
-                                                            <td className="text-right py-4 text-gray-600">
+                                                            <td className="text-center py-4 text-[var(--foreground)]">{item.quantity || 1}</td>
+                                                            <td className="text-right py-4 text-[var(--foreground)]">
                                                                 {getCurrencySymbol()}{(item.price || 0).toFixed(2)}
                                                             </td>
-                                                            <td className="text-right py-4 text-gray-500">
+                                                            <td className="text-right py-4 text-[var(--muted-foreground)]">
                                                                 {item.discountPercent > 0 ? `${item.discountPercent}%` : "—"}
                                                             </td>
-                                                            <td className="text-right py-4 text-gray-800 font-medium">
+                                                            <td className="text-right py-4 text-[var(--foreground)] font-medium">
                                                                 {getCurrencySymbol()}{netAmount.toFixed(2)}
                                                             </td>
                                                         </tr>
@@ -943,31 +944,31 @@ export default function InvoicePage() {
 
                                     <div className="flex justify-end mb-12">
                                         <div className="w-72">
-                                            <div className="flex justify-between py-3 border-b border-gray-100">
-                                                <span className="text-gray-500">Subtotal</span>
-                                                <span className="text-gray-800 font-medium">
+                                            <div className="flex justify-between py-3 border-b border-[var(--border)]">
+                                                <span className="text-[var(--muted-foreground)]">Subtotal</span>
+                                                <span className="text-[var(--foreground)] font-medium">
                                                     {getCurrencySymbol()}{calculateSubtotal().toFixed(2)}
                                                 </span>
                                             </div>
                                             {formData.discountPercent > 0 && (
-                                                <div className="flex justify-between py-3 border-b border-gray-100">
-                                                    <span className="text-gray-500">Discount ({formData.discountPercent}%)</span>
+                                                <div className="flex justify-between py-3 border-b border-[var(--border)]">
+                                                    <span className="text-[var(--muted-foreground)]">Discount ({formData.discountPercent}%)</span>
                                                     <span className="text-red-500 font-medium">
                                                         -{getCurrencySymbol()}{calculateDiscount().toFixed(2)}
                                                     </span>
                                                 </div>
                                             )}
                                             {formData.taxPercent > 0 && (
-                                                <div className="flex justify-between py-3 border-b border-gray-100">
-                                                    <span className="text-gray-500">Tax ({formData.taxPercent}%)</span>
+                                                <div className="flex justify-between py-3 border-b border-[var(--border)]">
+                                                    <span className="text-[var(--muted-foreground)]">Tax ({formData.taxPercent}%)</span>
                                                     <span className="text-orange-600 font-medium">
                                                         +{getCurrencySymbol()}{calculateTax().toFixed(2)}
                                                     </span>
                                                 </div>
                                             )}
                                             {formData.advancePaid > 0 && (
-                                                <div className="flex justify-between py-3 border-b border-gray-100">
-                                                    <span className="text-gray-500">Advance Paid</span>
+                                                <div className="flex justify-between py-3 border-b border-[var(--border)]">
+                                                    <span className="text-[var(--muted-foreground)]">Advance Paid</span>
                                                     <span className="text-green-600 font-medium">
                                                         -{getCurrencySymbol()}{formData.advancePaid.toFixed(2)}
                                                     </span>
@@ -979,7 +980,7 @@ export default function InvoicePage() {
                                                     background: 'linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%)',
                                                 }}
                                             >
-                                                <span className="font-bold text-gray-900">Total Due</span>
+                                                <span className="font-bold text-[var(--foreground)]">Total Due</span>
                                                 <span className="font-bold text-xl" style={{ color: '#4c3d6e' }}>
                                                     {getCurrencySymbol()}{calculateTotal().toFixed(2)}
                                                 </span>
@@ -992,23 +993,23 @@ export default function InvoicePage() {
                                             className="mb-8 p-5 rounded-lg"
                                             style={{ backgroundColor: '#faf9f7' }}
                                         >
-                                            <h3 className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold mb-4">Bank Details</h3>
+                                            <h3 className="text-xs uppercase tracking-[0.2em] text-[var(--muted-foreground)] font-semibold mb-4">Bank Details</h3>
                                             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                                                 <div>
-                                                    <p className="text-gray-400 text-[10px] uppercase tracking-wider">Account Name</p>
-                                                    <p className="text-gray-800 font-medium mt-1">{formData.bankDetails.accountName}</p>
+                                                    <p className="text-[var(--muted-foreground)] text-[10px] uppercase tracking-wider">Account Name</p>
+                                                    <p className="text-[var(--foreground)] font-medium mt-1">{formData.bankDetails.accountName}</p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-gray-400 text-[10px] uppercase tracking-wider">Account Number</p>
-                                                    <p className="text-gray-800 font-medium mt-1">{formData.bankDetails.accountNumber}</p>
+                                                    <p className="text-[var(--muted-foreground)] text-[10px] uppercase tracking-wider">Account Number</p>
+                                                    <p className="text-[var(--foreground)] font-medium mt-1">{formData.bankDetails.accountNumber}</p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-gray-400 text-[10px] uppercase tracking-wider">SWIFT / IFSC</p>
-                                                    <p className="text-gray-800 font-medium mt-1">{formData.bankDetails.swiftIfsc}</p>
+                                                    <p className="text-[var(--muted-foreground)] text-[10px] uppercase tracking-wider">SWIFT / IFSC</p>
+                                                    <p className="text-[var(--foreground)] font-medium mt-1">{formData.bankDetails.swiftIfsc}</p>
                                                 </div>
                                                 <div>
-                                                    <p className="text-gray-400 text-[10px] uppercase tracking-wider">UTR / Transaction ID</p>
-                                                    <p className="text-gray-800 font-medium mt-1">{formData.bankDetails.utrNumber}</p>
+                                                    <p className="text-[var(--muted-foreground)] text-[10px] uppercase tracking-wider">UTR / Transaction ID</p>
+                                                    <p className="text-[var(--foreground)] font-medium mt-1">{formData.bankDetails.utrNumber}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -1016,15 +1017,15 @@ export default function InvoicePage() {
 
                                     {formData.notes && (
                                         <div className="mb-8">
-                                            <h3 className="text-xs uppercase tracking-[0.2em] text-gray-400 font-semibold mb-3">Notes</h3>
-                                            <p className="text-gray-500 text-sm leading-relaxed whitespace-pre-line">{formData.notes}</p>
+                                            <h3 className="text-xs uppercase tracking-[0.2em] text-[var(--muted-foreground)] font-semibold mb-3">Notes</h3>
+                                            <p className="text-[var(--muted-foreground)] text-sm leading-relaxed whitespace-pre-line">{formData.notes}</p>
                                         </div>
                                     )}
 
-                                    <div className="pt-8 border-t border-gray-200">
+                                    <div className="pt-8 border-t border-[var(--border)]">
                                         <div className="flex justify-end">
                                             <div className="text-right">
-                                                <p className="text-gray-400 text-[10px] uppercase tracking-wider mb-2">Authorized Signature</p>
+                                                <p className="text-[var(--muted-foreground)] text-[10px] uppercase tracking-wider mb-2">Authorized Signature</p>
                                                 {formData.signatureImage ? (
                                                     <img 
                                                         src={formData.signatureImage} 
@@ -1033,8 +1034,8 @@ export default function InvoicePage() {
                                                     />
                                                 ) : (
                                                     <p
-                                                        className="italic text-gray-600 text-xl"
-                                                        style={{ fontFamily: "var(--font-display)" }}
+                                                        className="italic text-[var(--foreground)] text-xl"
+                                                        style={{ fontFamily: "var(--font-fraunces)" }}
                                                     >
                                                         {formData.from.name || "________________"}
                                                     </p>

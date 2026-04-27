@@ -74,7 +74,7 @@ export default function SignatureLinksPage() {
               <CardContent className="space-y-4">
                 <div className="flex gap-2">
                   <Input value={generatedLink} readOnly className="font-mono text-sm" />
-                  <Button variant="outline" onClick={copyLink}>
+                  <Button variant="secondary" onClick={copyLink}>
                     {copied ? <CheckCircle2 className="w-4 h-4 text-green-500" /> : <Copy className="w-4 h-4" />}
                   </Button>
                 </div>

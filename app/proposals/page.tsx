@@ -113,8 +113,8 @@ export default function ProposalsPage() {
         active="proposals"
         action={
           <div className="flex gap-2">
-            <Button variant={currency === "INR" ? "default" : "outline"} onClick={() => setCurrency("INR")}>INR</Button>
-            <Button variant={currency === "USD" ? "default" : "outline"} onClick={() => setCurrency("USD")}>USD</Button>
+            <Button variant={currency === "INR" ? "primary" : "secondary"} onClick={() => setCurrency("INR")}>INR</Button>
+            <Button variant={currency === "USD" ? "primary" : "secondary"} onClick={() => setCurrency("USD")}>USD</Button>
           </div>
         }
       />

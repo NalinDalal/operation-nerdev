@@ -147,7 +147,7 @@ export default function EmailPage() {
           <Button
             onClick={handleSend}
             disabled={sending}
-            variant="success"
+            variant="primary"
             className="gap-2"
           >
             {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
@@ -273,22 +273,22 @@ export default function EmailPage() {
                 </h2>
               </div>
 
-              <div className="bg-white shadow-xl rounded-sm overflow-hidden">
+              <div className="bg-[var(--card)] shadow-xl rounded-sm overflow-hidden">
                 <div className="p-8">
-                  <div className="border-b border-gray-200 pb-6 mb-6">
+                  <div className="border-b border-[var(--border)] pb-6 mb-6">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="w-10 h-10 rounded-lg flex items-center justify-center overflow-hidden bg-gray-100">
-                        <span className="text-lg font-bold text-gray-600">ND</span>
+                        <span className="text-lg font-bold text-[var(--muted-foreground)]">ND</span>
                       </div>
                       <div>
-                        <p className="font-semibold text-gray-900">NerDev</p>
-                        <p className="text-xs text-gray-500">hello@nerdev.in</p>
+                        <p className="font-semibold text-[var(--foreground)]">NerDev</p>
+                        <p className="text-xs text-[var(--muted-foreground)]">hello@nerdev.in</p>
                       </div>
                     </div>
-                    <div className="text-sm text-gray-500">
-                      <p><span className="text-gray-400">To:</span> {formData.to || 'recipient@example.com'}</p>
-                      {formData.cc && <p><span className="text-gray-400">CC:</span> {formData.cc}</p>}
-                      <p><span className="text-gray-400">Subject:</span> {TEMPLATES[selectedTemplate].subject}</p>
+                    <div className="text-sm text-[var(--muted-foreground)]">
+                      <p><span className="text-[var(--muted-foreground)]">To:</span> {formData.to || 'recipient@example.com'}</p>
+                      {formData.cc && <p><span className="text-[var(--muted-foreground)]">CC:</span> {formData.cc}</p>}
+                      <p><span className="text-[var(--muted-foreground)]">Subject:</span> {TEMPLATES[selectedTemplate].subject}</p>
                     </div>
                   </div>
 
@@ -296,8 +296,8 @@ export default function EmailPage() {
                     __html: TEMPLATES[selectedTemplate].generate(formData) + (formData.body ? `<p style="font-size:15px;color:#555555;line-height:1.7;margin:0;">${formData.body}</p>` : '')
                   }} />
 
-                  <div className="border-t border-gray-200 mt-8 pt-6">
-                    <p className="text-xs text-gray-400">
+                  <div className="border-t border-[var(--border)] mt-8 pt-6">
+                    <p className="text-xs text-[var(--muted-foreground)]">
                       © 2026 NerDev · Indore, India<br/>
                       <span className="underline">Unsubscribe</span>
                     </p>

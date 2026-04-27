@@ -245,7 +245,7 @@ export default function ScopeOfWorkPage() {
                   }} />
                 </div>
               ))}
-              <Button variant="outline" size="sm" onClick={() => setDeliverables([...deliverables, { name: "", description: "", criteria: "" }])}>
+              <Button variant="secondary" size="sm" onClick={() => setDeliverables([...deliverables, { name: "", description: "", criteria: "" }])}>
                 <Plus className="w-4 h-4 mr-2" /> Add Deliverable
               </Button>
             </CardContent>
@@ -287,7 +287,7 @@ export default function ScopeOfWorkPage() {
                   }} />
                 </div>
               ))}
-              <Button variant="outline" size="sm" onClick={() => setMilestones([...milestones, { name: "", description: "", date: "" }])}>
+              <Button variant="secondary" size="sm" onClick={() => setMilestones([...milestones, { name: "", description: "", date: "" }])}>
                 <Plus className="w-4 h-4 mr-2" /> Add Milestone
               </Button>
             </CardContent>

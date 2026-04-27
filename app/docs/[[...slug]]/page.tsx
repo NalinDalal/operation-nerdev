@@ -3,7 +3,7 @@ import path from "path";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { Nav } from "@/components/nav";
+import { SidebarLayout } from "@/components/sidebar";
 
 interface DocPageProps {
   params: Promise<{ slug: string[] }>;
@@ -29,7 +29,7 @@ export default async function DocPage({ params }: DocPageProps) {
   const processedContent = lines.map((line) => {
     if (line.startsWith("# ")) {
       inList = false;
-      return `<h1 class="text-2xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>${line.slice(2)}</h1>`;
+      return `<h1 class="text-2xl font-bold mb-4" style={{ fontFamily: "var(--font-fraunces)" }}>${line.slice(2)}</h1>`;
     }
     if (line.startsWith("## ")) {
       inList = false;
@@ -72,23 +72,20 @@ export default async function DocPage({ params }: DocPageProps) {
   }).join("\n").replace(/<\/ul>\s*<p \/>/g, "</ul>").replace(/<\/ol>\s*<p \/>/g, "</ol>");
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <Nav title="Documentation" subtitle="Templates and guides" />
-      <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
-        <Link href="/" className="inline-flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] mb-6 transition-colors">
-          <ArrowLeft className="w-4 h-4" /> Back to Tools
-        </Link>
-        <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-8 lg:p-12 shadow-sm">
-          <div className="max-w-4xl">
-            <h1 className="text-3xl font-bold mb-8 pb-4 border-b border-[var(--border)]" style={{ fontFamily: "var(--font-display)" }}>
-              {title}
-            </h1>
-            <div className="prose prose-lg max-w-none">
-              <div dangerouslySetInnerHTML={{ __html: processedContent }} />
-            </div>
+    <SidebarLayout title="Documentation">
+      <Link href="/" className="inline-flex items-center gap-2 text-sm text-[var(--muted-foreground)] hover:text-[var(--foreground)] mb-6 transition-colors">
+        <ArrowLeft className="w-4 h-4" /> Back to Tools
+      </Link>
+      <div className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-8 lg:p-12 shadow-sm">
+        <div className="max-w-4xl">
+          <h1 className="text-3xl font-bold mb-8 pb-4 border-b border-[var(--border)]" style={{ fontFamily: "var(--font-fraunces)" }}>
+            {title}
+          </h1>
+          <div className="prose prose-lg max-w-none">
+            <div dangerouslySetInnerHTML={{ __html: processedContent }} />
           </div>
         </div>
       </div>
-    </div>
+    </SidebarLayout>
   );
 }

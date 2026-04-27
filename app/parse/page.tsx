@@ -295,7 +295,7 @@ export default function ParsePage() {
           <CardHeader className="pb-4">
             <CardTitle 
               className="text-lg font-medium" 
-              style={{ fontFamily: "var(--font-display)" }}
+              style={{ fontFamily: "var(--font-fraunces)" }}
             >
               Upload Invoice
             </CardTitle>
@@ -358,7 +358,7 @@ export default function ParsePage() {
             <CardHeader className="pb-4">
               <CardTitle 
                 className="text-lg font-medium" 
-                style={{ fontFamily: "var(--font-display)" }}
+                style={{ fontFamily: "var(--font-fraunces)" }}
               >
                 Extracted Text
               </CardTitle>
@@ -377,7 +377,7 @@ export default function ParsePage() {
             <CardHeader className="pb-4">
               <CardTitle 
                 className="text-lg font-medium" 
-                style={{ fontFamily: "var(--font-display)" }}
+                style={{ fontFamily: "var(--font-fraunces)" }}
               >
                 Parsed Invoice Data
               </CardTitle>
@@ -447,7 +447,7 @@ export default function ParsePage() {
                   </h3>
                   <p 
                     className="text-2xl font-bold" 
-                    style={{ fontFamily: "var(--font-display)" }}
+                    style={{ fontFamily: "var(--font-fraunces)" }}
                   >
                     {CURRENCY_SYMBOLS[parsedData.currency || "INR"]}
                     {parsedData.totalAmount?.toFixed(2) || "—"}

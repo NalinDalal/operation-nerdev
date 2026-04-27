@@ -18,6 +18,7 @@ import {
     Menu
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Logo } from "./logo";
 
 const primaryNav = [
     { name: "Home", href: "/", icon: Home },
@@ -66,18 +67,16 @@ export function Nav({ title, subtitle, action }: { active?: string; title?: stri
                 <div className="max-w-[1600px] mx-auto px-4 lg:px-6 py-2.5">
                     <div className="flex items-center justify-between gap-4">
                         <Link href="/" className="flex items-center gap-3 flex-shrink-0">
-                            <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden bg-[var(--lavender-deep)]">
-                                <img src="/logo-dark.png" alt="Logo" width={20} height={20} className="object-contain brightness-0 invert" />
-                            </div>
+                            <Logo size={32} className="rounded-lg" />
                             {title ? (
                                 <div className="hidden sm:block">
-                                    <h1 className="text-base font-semibold text-[var(--foreground)]" style={{ fontFamily: "var(--font-display)" }}>
+                                    <h1 className="text-base font-semibold text-[var(--foreground)]" style={{ fontFamily: "var(--font-fraunces)" }}>
                                         {title}
                                     </h1>
                                     {subtitle && <p className="text-xs text-[var(--muted-foreground)] hidden lg:block">{subtitle}</p>}
                                 </div>
                             ) : (
-                                <span className="font-semibold text-base text-[var(--foreground)] hidden sm:block" style={{ fontFamily: "var(--font-display)" }}>
+                                <span className="font-semibold text-base text-[var(--foreground)] hidden sm:block" style={{ fontFamily: "var(--font-fraunces)" }}>
                                     NerDev
                                 </span>
                             )}
@@ -129,10 +128,8 @@ export function Nav({ title, subtitle, action }: { active?: string; title?: stri
                     <div className="fixed right-0 top-0 bottom-0 w-72 bg-[var(--card)] border-l border-[var(--border)] shadow-xl p-4 animate-slide-in-left overflow-y-auto">
                         <div className="flex items-center justify-between mb-6">
                             <Link href="/" className="flex items-center gap-2" onClick={() => setMobileMenuOpen(false)}>
-                                <div className="w-8 h-8 rounded-lg flex items-center justify-center overflow-hidden bg-[var(--lavender-deep)]">
-                                    <img src="/logo-dark.png" alt="Logo" width={20} height={20} className="object-contain brightness-0 invert" />
-                                </div>
-                                <span className="font-semibold text-base" style={{ fontFamily: "var(--font-display)" }}>NerDev</span>
+                                <Logo size={32} className="rounded-lg" />
+                                <span className="font-semibold text-base" style={{ fontFamily: "var(--font-fraunces)" }}>NerDev</span>
                             </Link>
                             <button
                                 onClick={() => setMobileMenuOpen(false)}
