@@ -7,7 +7,8 @@ import { Textarea } from "@/components/textarea";
 import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
 import { FileText, Mail, ScanLine, Send, Loader2 } from "lucide-react";
-import { Nav } from "@/components/nav";
+import { SidebarLayout } from "@/components/sidebar";
+import { EmailActions } from "@/components/email-actions";
 
 const TEMPLATES = {
   welcome: {
@@ -138,26 +139,8 @@ export default function EmailPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <Nav 
-        title="Email Sender" 
-        subtitle="Send templated emails" 
-        active="email"
-        action={
-          <Button
-            onClick={handleSend}
-            disabled={sending}
-            variant="primary"
-            className="gap-2"
-          >
-            {sending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-            {sending ? 'Sending...' : 'Send'}
-          </Button>
-        }
-      />
-
-      <div className="max-w-[1600px] mx-auto px-4 lg:px-8 py-8">
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+    <SidebarLayout title="Email" action={<EmailActions onSend={handleSend} sending={sending} />}>
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
           <div className="xl:col-span-5 space-y-6 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 180px)' }}>
             <Card className="border-[var(--border)] shadow-sm">
               <CardHeader className="pb-4">
@@ -307,7 +290,6 @@ export default function EmailPage() {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+    </SidebarLayout>
   );
 }

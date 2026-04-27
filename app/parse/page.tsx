@@ -7,7 +7,7 @@ import { Label } from "@/components/label";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/card";
 import { Loader2, Upload, ArrowRight, FileText, AlertCircle } from "lucide-react";
 import { InvoiceData, InvoiceFormData } from "@/utils/types";
-import { Nav } from "@/components/nav";
+import { SidebarLayout } from "@/components/sidebar";
 
 function generateId(): string {
   return Math.random().toString(36).substring(2, 9);
@@ -287,10 +287,7 @@ export default function ParsePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--background)]">
-      <Nav title="Invoice Parser" subtitle="Extract data from invoices" active="parse" />
-
-      <div className="max-w-4xl mx-auto px-4 lg:px-8 py-8">
+        <SidebarLayout title="Parse Invoice">
         <Card className="border-[var(--border)] shadow-sm mb-6">
           <CardHeader className="pb-4">
             <CardTitle 

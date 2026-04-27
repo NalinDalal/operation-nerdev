@@ -9,6 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/card";
 import { Plus, Trash2, Printer, FileText, ScanLine, ArrowRight, Download, Save, Send, Mail } from "lucide-react";
 import { InvoiceFormData, LineItem } from "@/utils/types";
 import { SidebarLayout } from "@/components/sidebar";
+import { Logo } from "@/components/logo";
 
 const CURRENCIES = [
     { code: "INR", symbol: "₹", name: "Indian Rupee" },
@@ -1023,43 +1024,8 @@ export default function InvoicePage() {
                                 </div>
                             </div>
                         </div>
-                    </div>
+</div>
                 </div>
         </SidebarLayout>
-
-            <style jsx global>{`
-        @media print {
-          @page {
-            size: A4;
-            margin: 10mm;
-          }
-          body * {
-            visibility: hidden;
-          }
-          .print\\:hidden {
-            display: none !important;
-          }
-          .print-container {
-            visibility: visible;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            max-width: 210mm;
-            min-height: 297mm;
-            box-shadow: none !important;
-            margin: 0;
-            padding: 15mm !important;
-            background: white;
-          }
-          .print-container, .print-container * {
-            visibility: visible;
-          }
-          .print-container * {
-            font-size: 11pt !important;
-            line-height: 1.3 !important;
-          }
-        }
-      `}</style>
     );
 }
