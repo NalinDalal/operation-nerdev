@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans, DM_Mono } from "next/font/google";
-import Link from "next/link";
+import { Playfair_Display, DM_Sans, DM_Mono, Fraunces } from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -22,6 +21,13 @@ const dmMono = DM_Mono({
   display: "swap",
 });
 
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
+  axes: ["opsz"],
+});
+
 export const metadata: Metadata = {
   title: "NerDev Tools",
   description: "Everything you need to run your dev studio",
@@ -34,7 +40,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable}`}>
+      <body className={`${playfair.variable} ${dmSans.variable} ${dmMono.variable} ${fraunces.variable}`}>
         {children}
       </body>
     </html>

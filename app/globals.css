@@ -37,6 +37,12 @@
   --success-foreground: #ffffff;
   --info: #3b82f6;
   --info-foreground: #ffffff;
+  
+  --dust: #f4f2ee;
+  --fog: #e9e6e0;
+  --smoke: #d4d1c9;
+  --charcoal: #2d2d2d;
+  --accent-warm: #c7a77a;
 }
 
 @theme inline {
@@ -88,6 +94,12 @@
     --lavender-deep: #7c6ea8;
     --lavender-muted: #6b5a8c;
     --lavender-light: #2d2540;
+    
+    --dust: #1f1e1c;
+    --fog: #2a2927;
+    --smoke: #3d3c3a;
+    --charcoal: #faf9f7;
+    --accent-warm: #c7a77a;
   }
 }
 
@@ -96,7 +108,7 @@
 }
 
 body {
-  background: var(--background);
+  background: var(--dust);
   color: var(--foreground);
   font-family: var(--font-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -104,7 +116,11 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display), Georgia, serif;
+  font-family: var(--font-fraunces), Georgia, serif;
+}
+
+.mono {
+  font-family: var(--font-mono), monospace;
 }
 
 ::selection {
@@ -199,18 +215,17 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--muted);
-  border-radius: 4px;
+  background: var(--fog);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
-  border-radius: 4px;
+  background: var(--smoke);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
@@ -218,7 +233,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-scroll::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .form-scroll::-webkit-scrollbar-track {
@@ -226,30 +241,48 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-scroll::-webkit-scrollbar-thumb {
-  background: #d4d3d1;
-  border-radius: 3px;
+  background: var(--smoke);
+  border-radius: 2px;
 }
 
 .form-scroll::-webkit-scrollbar-thumb:hover {
-  background: #a1a09c;
+  background: var(--warm-gray);
 }
 
 .preview-scroll::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
 }
 
 .preview-scroll::-webkit-scrollbar-track {
-  background: #f0efed;
-  border-radius: 5px;
-  border: 2px solid #f0efed;
+  background: var(--fog);
+  border-radius: 3px;
 }
 
 .preview-scroll::-webkit-scrollbar-thumb {
-  background: var(--lavender-deep);
-  border-radius: 5px;
-  border: 2px solid #f0efed;
+  background: var(--ink);
+  border-radius: 3px;
+  opacity: 0.2;
 }
 
 .preview-scroll::-webkit-scrollbar-thumb:hover {
-  background: var(--lavender-muted);
+  opacity: 0.4;
+}
+
+.fv-head {
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  padding: 0 0 12px 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+
+.fv-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  padding: 24px;
+  margin-bottom: 16px;
 }
